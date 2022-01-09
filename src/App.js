@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div id = "home" className='App bg-bgcolor max-w-screen overflow-hidden min-h-screen text-pinktext'>
+    <div id = "home" className=' bg-bgcolor max-w-screen overflow-hidden min-h-screen text-pinktext'>
       <Header/>
       <HeroContainer/>
       <Fan/>

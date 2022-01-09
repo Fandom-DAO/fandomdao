@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
   return (
     <div className='py-10 text-lg'>
-      <div className='fixed inset-x-0 top-0 bg-darkgray w-full h-16 flex p-4 items-center justify-between '>
+      <div className='fixed inset-x-0 top-0 bg-darkgray/80 backdrop-filter backdrop-blur w-full h-16 flex p-4 items-center justify-between '>
         <div>
           <img
             src={require('../assets/fandomDAO.png')}
