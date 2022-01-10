@@ -1,27 +1,23 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
+const SERVICE_ID = process.env.REACT_APP_SERVICE_ID;
+const USER_ID = process.env.REACT_APP_USER_ID;
+
 const Reachout = () => {
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        'service_pjc9fob',
-        'contact_form',
-        form.current,
-        'user_1ZgKmsnKSmgFtOD9CyAmj'
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          form.current.reset()
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    emailjs.sendForm(SERVICE_ID, 'contact_form', form.current, USER_ID).then(
+      (result) => {
+        console.log(result.text);
+        form.current.reset();
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   };
   return (
     <div
@@ -46,6 +42,7 @@ const Reachout = () => {
           type='text'
           placeholder='Name'
           name='user_name'
+          required
         />
 
         <input
@@ -53,12 +50,14 @@ const Reachout = () => {
           type='email'
           placeholder='Email'
           name='user_email'
+          required
         />
 
         <textarea
           className='rounded-sm'
           placeholder='Enter your message'
           name='message'
+          required
         />
         <button
           type='submit'
