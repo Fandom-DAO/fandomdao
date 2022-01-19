@@ -18,10 +18,10 @@ export default function Cards() {
                   <div>
                     <h3 className="text-sm text-white text-gray-700 ml-4 mt-4">
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {nft.name}
+                      {artistData.name}
                     </h3>
                     <p className="mt-1 text-white text-sm text-gray-500 ml-4">
-                      {nft.color}
+                      {nft.name}
                     </p>
                   </div>
                   <p className="text-sm text-white font-medium text-gray-900 mr-4 mt-2">
