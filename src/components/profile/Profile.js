@@ -8,8 +8,8 @@ const Profile = () => {
     <div className="grid">
       <div className="bg-gray grid rounded-lg mx-12 h-80">
         <img
-          className="rounded-full bg-white w-32 place-self-center border border-gray-100 shadow-sm mt-64"
-          src=""
+          className="rounded-full bg-white w-32 h-32 object-cover place-self-center mt-64"
+          src={artistData.profileSrc}
           alt="user image"
           onError={(e) => {
             e.target.src = fallbackAvatar
