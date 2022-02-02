@@ -33,8 +33,6 @@ const CreateNFT = ({ open, setOpen }) => {
         setValuesToDefault()
     }
     const publishNFT = () => {
-        console.log(artistName, description, amount, price, type)
-        console.log("imajdfhjksdfjkfkj", image)
         if (artistName && description && amount && price && image && type) {
             const nftObj = {
                 artistName,
@@ -45,6 +43,7 @@ const CreateNFT = ({ open, setOpen }) => {
                 image
             }
             console.log("nftObj", nftObj)
+            setValuesToDefault()
             setOpen(false)
         } else {
             alert('Fill all the values in the form !!!')
