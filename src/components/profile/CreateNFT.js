@@ -15,7 +15,7 @@ const CreateNFT = ({ open, setOpen }) => {
         setDescription(undefined)
         setAmount(undefined)
         setImage(undefined)
-        setType(undefined)
+        setType('Premium')
         setPrice(undefined)
     }
     const handleimageUpload = (event) => {
@@ -45,6 +45,7 @@ const CreateNFT = ({ open, setOpen }) => {
             console.log("nftObj", nftObj)
             setValuesToDefault()
             setOpen(false)
+            alert('NFTs Published Successfully !!!')
         } else {
             alert('Fill all the values in the form !!!')
         }
