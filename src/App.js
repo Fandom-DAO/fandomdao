@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/contactus" exact element={
           <ContactUs />
         }/>
-        <Route path="/profile/:username" exact element={
+        <Route path="/profile" exact element={
           <Profile />
         }/>
         <Route path="/editprofile" exact element={

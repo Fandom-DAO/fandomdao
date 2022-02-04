@@ -1,56 +1,41 @@
 import { React, useEffect, useState } from "react";
-import { useMoralis, useMoralisFile } from "react-moralis";
-import {useNavigate} from 'react-router-dom';
+import { create } from 'ipfs-http-client'
 
 function Editprofile() {
-  const {user, setUserData} = useMoralis();
-  const {saveFile, isUploading} = useMoralisFile();
 
-  const [username, setUsername] = useState()
-  const [email, setEmail] = useState()
+  const client = create('https://ipfs.infura.io:5001/api/v0')
 
-  const [photoFile, setPhotoFile] = useState();
-  const [photoFileName, setPhotoFileName] = useState();
   const [profilePic, setProfilePic] = useState(null);
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      setProfilePic(user.attributes?.profilePic?._url);
-      setUsername(user.attributes.username)
-      setEmail(user.attributes.email)
+  async function onChangePhoto(e) {
+    const file = e.target.files[0];
+    try {
+      const added = await client.add(file, {
+        progress: (prog) => console.log(`received: ${prog}`),
+      });
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setProfilePic(url);
+    } catch (err) {
+      console.log(err);
     }
-  }, [user]);
-
-  const onChangePhoto = (e) => {
-    setPhotoFile(e.target.files[0]);
-    setPhotoFileName(e.target.files[0].name);
-  };
-
-  const onSubmitPhoto = async () => {
-    if (photoFile){
-      const file = photoFile;
-      const name = photoFileName;
-      let fileIpfs = await saveFile(name, file, { saveIPFS: true });
-      user.set("profilePic", fileIpfs);
-      await user.save();
-      setProfilePic(user.attributes.profilePic._url);
-      window.location.reload(false);
-      navigate(`/profile/${username}`);
   }
-};
 
-    const handleSave = () => {
-        setUserData(
-            {
-                username,
-                email
-            }
-        )
-        
-    };
-
+  async function createItem() {
+    const user_data = JSON.stringify({
+      username,
+      email,
+      profilePic,
+    });
+    try {
+      const added = await client.add(user_data);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      console.log(url);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
       <div className="flex justify-around bg-[#0a111a]">
@@ -58,14 +43,16 @@ function Editprofile() {
           <h1 className="text-[#fff] text-5xl font-semibold pb-4">Edit Profile</h1>
           <h2 className="text-[#fff] text-lg font-semibold pb-4">Customize you username and profile picture</h2>
           <label class="block border-b-2 mb-10 text-[#ffffff]">
-          <input type="text" value={username} placeholder="User Name" className='block bg-[#0a111a] w-full h-7 shadow-sm' onChange={(event) => setUsername(event.currentTarget.value)}/>
+          <input type="text" value={username} placeholder="User Name" className='block bg-[#0a111a] w-full h-7 shadow-sm' 
+          onChange={(event) => setUsername(event.currentTarget.value)}/>
           </label>
 
           <label class="block border-b-2 mb-10 text-[#ffffff]">
-          <input type="text" value={email} placeholder="Email" className='block bg-[#0a111a] w-full h-7 shadow-sm' onChange={(event) => setEmail(event.currentTarget.value)}/>
+          <input type="text" value={email} placeholder="Email" className='block bg-[#0a111a] w-full h-7 shadow-sm' 
+          onChange={(event) => setEmail(event.currentTarget.value)}/>
           </label>
-            <button onClick={() => {handleSave();onSubmitPhoto();}} class="bg-[#7138bb] hover:bg-[#9477b8] text-white font-bold py-2 rounded-full">
-              {isUploading?"Wait":"Update Profile"}
+            <button onClick={createItem} class="bg-[#7138bb] hover:bg-[#9477b8] text-white font-bold py-2 rounded-full">
+              Update Profile
             </button>
           
         </div>
