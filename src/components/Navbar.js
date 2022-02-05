@@ -27,7 +27,7 @@ function Navbar() {
         setIsAuthenticated(true)
 			})
 			.catch(error => {
-				alert("Error"+error.message);
+				alert("Error-"+error.message);
 			
 			});
 
