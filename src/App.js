@@ -12,7 +12,7 @@ import { Routes, Route } from 'react-router-dom';
 export default function App() {
   
   return (
-    <div className='m-0 p-0 box-border bg-[#0a111a]'>
+    <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
       <Navbar/>
       <>
       <Routes>

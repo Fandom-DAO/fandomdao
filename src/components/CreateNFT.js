@@ -2,6 +2,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { create } from 'ipfs-http-client'
 
+
 const CreateNFT = ({ open, setOpen }) => {
 
     const client = create('https://ipfs.infura.io:5001/api/v0')
@@ -14,6 +15,10 @@ const CreateNFT = ({ open, setOpen }) => {
     const [image, setImage] = useState()
     const [type, setType] = useState('Premium')
     const cancelButtonRef = useRef(null)
+
+    const NFT_CONTRACT_ADDRESS = "0x6D4c7d55d426570Ceee834bb6B5320e12A7a3dec";
+    const MARKET_CONTRACT_ADDRESS = "0xB552a61eBD45b1C872faf7D4E4B3E2b9f55c70aF";
+
     const setValuesToDefault = () => {
         setArtistName(undefined)
         setDescription(undefined)
@@ -97,7 +102,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                         <div className="mt-2">
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full px-3">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                                                         Artist Name
                                                     </label>
                                                     <input
@@ -113,7 +118,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                             </div>
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full px-3">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
                                                         Description
                                                     </label>
                                                     <input
@@ -128,7 +133,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                             </div>
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
                                                         Price
                                                     </label>
                                                     <input
@@ -141,7 +146,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                                     />
                                                 </div>
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
                                                         Type
                                                     </label>
                                                     <div className="relative">
@@ -161,7 +166,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                                 </div>
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
 
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                                                         Amount
                                                     </label>
                                                     <input
