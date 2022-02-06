@@ -20,7 +20,12 @@ const Profile = () => {
 
   const [open, setOpen] = useState(false)
 
+  // const client = create()
+
   const navigate = useNavigate();
+
+  // const file = client.add(urlSource('https://ipfs.io/images/ipfs-logo.svg'))
+  // console.log(file)
 
   const onChangePhoto = (e) => {
     setPhotoFile(e.target.files[0]);

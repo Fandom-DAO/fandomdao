@@ -14,7 +14,15 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const [acc, setAcc] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState();
+
+  useEffect(() => {
+    if (!isAuthenticated)  {
+      setIsAuthenticated(true)
+      console.log(isAuthenticated)
+    }
+  },[isAuthenticated]);
+
 
   const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
@@ -22,7 +30,7 @@ function Navbar() {
 			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then(result => {
         let provider = ethers.getDefaultProvider();
-        console.log(result[0],provider);
+        // console.log(result[0],provider);
         setAcc(result[0].slice(0,6)+'....'+result[0].slice(-5));
         setIsAuthenticated(true)
 			})

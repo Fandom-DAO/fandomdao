@@ -1,9 +1,19 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { create } from 'ipfs-http-client'
-
+import { ethers } from 'ethers';
+import MarketABI from '../utils/NFTMarketplaceABI.json';
+import NFTABI from '../utils/NFTABI.json';
 
 const CreateNFT = ({ open, setOpen }) => {
+    const NFT_CONTRACT_ADDRESS = "0x6D4c7d55d426570Ceee834bb6B5320e12A7a3dec";
+    const MARKET_CONTRACT_ADDRESS = "0xB552a61eBD45b1C872faf7D4E4B3E2b9f55c70aF";
+
+    const [nFTContract, setNFTContract] = useState();
+    const [marketContract, setMarketContract] = useState();
+    
+    // This is the tokenURI
+    const [tokenURI, setTokenURI] = useState();
 
     const client = create('https://ipfs.infura.io:5001/api/v0')
 
@@ -15,17 +25,13 @@ const CreateNFT = ({ open, setOpen }) => {
     const [image, setImage] = useState()
     const [type, setType] = useState('Premium')
     const cancelButtonRef = useRef(null)
-
-    const NFT_CONTRACT_ADDRESS = "0x6D4c7d55d426570Ceee834bb6B5320e12A7a3dec";
-    const MARKET_CONTRACT_ADDRESS = "0xB552a61eBD45b1C872faf7D4E4B3E2b9f55c70aF";
-
     const setValuesToDefault = () => {
-        setArtistName(undefined)
-        setDescription(undefined)
-        setAmount(undefined)
-        setImage(undefined)
+        setArtistName("")
+        setDescription("")
+        setAmount(0)
+        setImage("")
         setType('Premium')
-        setPrice(undefined)
+        setPrice(0)
     }
     const handleimageUpload = (event) => {
         event.preventDefault()
@@ -41,30 +47,68 @@ const CreateNFT = ({ open, setOpen }) => {
         setOpen(false)
         setValuesToDefault()
     }
+
     async function publishNFT(){
         if (artistName && description && amount && price && image && type) {
+            // Sending the meta-data to IPFS
             const nftObj = JSON.stringify({
                 artistName,
                 description,
-                amount,
-                price,
-                type,
-                image
+                image: image,
+                type
             });
             try {
               const added = await client.add(nftObj);
-              const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-              console.log(url);
+
+              let tempURI = `https://ipfs.infura.io/ipfs/${added.path}`;
+              console.log(" tempURI: ", tempURI);
+
+              setTokenURI(tempURI);
+              console.log(" TokenURI: ", tokenURI);
+                
+              // Done ??
+              await launchNFTHandler();
+
+              alert('NFTs Published Successfully !!!')
             } catch (err) {
-              console.log(err);
+              console.log("Error In: ", err);
             }
             setValuesToDefault()
             setOpen(false)
-            alert('NFTs Published Successfully !!!')
         } else {
             alert('Fill all the values in the form !!!')
         }
     }
+    
+    const launchNFTHandler = async() => {
+        // Launch NFT Returns TokenInfo => tokenId, Price, Amount
+        const tokenInfo = await nFTContract.launchNFT(amount, price, tokenURI);
+        console.log("Token INFO: ", tokenInfo);
+
+        // NFT is minted, now listing of NFT
+
+    }
+
+    useEffect(() => {
+        try {
+            const { ethereum } = window;
+
+            if(ethereum){
+
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const nftContract = new ethers.Contract(NFT_CONTRACT_ADDRESS, NFTABI.abi, signer);
+
+                const marketPlaceContract = new ethers.Contract(MARKET_CONTRACT_ADDRESS, MarketABI.abi, signer);
+                
+                setNFTContract(nftContract);
+                setMarketContract(marketPlaceContract);
+            }
+        } catch (err){
+            console.log("In error: " + err);
+        }
+    }, []);
+    
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -102,7 +146,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                         <div className="mt-2">
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full px-3">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                                         Artist Name
                                                     </label>
                                                     <input
@@ -118,7 +162,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                             </div>
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full px-3">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                                         Description
                                                     </label>
                                                     <input
@@ -133,7 +177,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                             </div>
                                             <div className="flex flex-wrap -mx-3 mb-6">
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
                                                         Price
                                                     </label>
                                                     <input
@@ -146,7 +190,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                                     />
                                                 </div>
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
                                                         Type
                                                     </label>
                                                     <div className="relative">
@@ -166,7 +210,7 @@ const CreateNFT = ({ open, setOpen }) => {
                                                 </div>
                                                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
 
-                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+                                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                                                         Amount
                                                     </label>
                                                     <input
@@ -221,14 +265,14 @@ const CreateNFT = ({ open, setOpen }) => {
                                 <button
                                     type="button"
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-blue focus:outline-none bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={publishNFT}
+                                    onClick={() => publishNFT}
                                 >
                                     Publish NFTs
                                 </button>
                                 <button
                                     type="button"
                                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={handleCancel}
+                                    onClick={() => handleCancel}
                                     ref={cancelButtonRef}
                                 >
                                     Cancel
