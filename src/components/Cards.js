@@ -1,4 +1,4 @@
-import { artistData } from '../../assets/data'
+import { artistData } from '../assets/data'
 export default function Cards() {
   return (
     <>
@@ -16,15 +16,15 @@ export default function Cards() {
                 </div>
                 <div className="flex justify-between bg-darkgray h-28 rounded">
                   <div>
-                    <h3 className="text-sm text-white text-gray-700 ml-4 mt-4">
+                    <h3 className="text-sm  text-gray-700 ml-4 mt-4">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {artistData.name}
                     </h3>
-                    <p className="mt-1 text-white text-sm text-gray-500 ml-4">
+                    <p className="mt-1 text-sm text-gray-500 ml-4">
                       {nft.name}
                     </p>
                   </div>
-                  <p className="text-sm text-white font-medium text-gray-900 mr-4 mt-2">
+                  <p className="text-sm font-medium text-gray-900 mr-4 mt-2">
                     {nft.price}
                   </p>
                 </div>

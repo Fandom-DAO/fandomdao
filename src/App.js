@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-import Header from './components/Header';
-import HeroContainer from './components/HeroContainer';
-import Sidebar from './components/Sidebar';
-import Fan from './components/Fan';
-import Reachout from './components/Reachout';
+import Home from './pages/Home';
+import About from './pages/About';
+import ContactUs from './pages/Contactus';
+import Profile from './pages/Profile';
+import EditProfile from './pages/Editprofile';
+import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-function App() {
+
+import { Routes, Route } from 'react-router-dom';
+
+export default function App() {
+  
   return (
-    <div id = "home" className=' bg-bgcolor max-w-screen overflow-hidden min-h-screen text-pinktext'>
-      <Header/>
-      <HeroContainer/>
-      <Fan/>
-      <Reachout/>
+    <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
+      <Navbar/>
+      <>
+      <Routes>
+        <Route path="/" exact element={
+          <Home />
+        }/>
+        <Route path="/about" exact element={
+          <About />
+        }/>
+        <Route path="/contactus" exact element={
+          <ContactUs />
+        }/>
+        <Route path="/profile" exact element={
+          <Profile />
+        }/>
+        <Route path="/editprofile" exact element={
+          <EditProfile />
+        }/>
+      </Routes>
+      </>
       <Footer/>
-      {/* <Sidebar/> */}
     </div>
   );
 }
-
-export default App;

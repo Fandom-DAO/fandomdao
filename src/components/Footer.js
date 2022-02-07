@@ -2,9 +2,9 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div className='flex w-full justify-around  text-left mt-16 p-4 h-48 border-t border-darkgray'>
+    <div className='flex w-full justify-around  text-left p-4 h-48 border-t border-darkgray bg-[#0a111a]'>
       <div className='flex flex-col text-left'>
-        <h3 className='capitalize text-lg font-extrabold tracking-widest'>
+        <h3 className='capitalize text-lg font-extrabold tracking-widest text-[#d53f86]'>
           FANDOMDAO
         </h3>
         <p className='text-white mt-4'>

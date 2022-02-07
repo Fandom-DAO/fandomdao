@@ -4,7 +4,7 @@ import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
 const HeroContainer = () => {
   return (
     <div className='flex w-screen h-full justify-around mt-4 '>
-      <div className='flex flex-col w-1/2 p-4 justify-center'>
+      <div className='flex flex-col w-1/2 p-4 justify-center text-[#d53f86]'>
         <h1 className='font-extrabold text-5xl text-left '>
           Mint an NFT, Become a Fan, get exclusive discounts.
         </h1>
@@ -12,7 +12,7 @@ const HeroContainer = () => {
           We help artists and fans connect better. Mint your artist's NFTs and
           get exclusive discounts on their shows and events.
         </p>
-        <button className='rounded p-2 shadow-md  shadow-indigo-500/40   w-1/3 mt-12 text-white text-lg font-semibold bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext'>
+        <button className='rounded p-2 shadow-md  shadow-indigo-500/40   w-1/3 mt-12 text-white text-lg font-semibold bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
           Become a Fan
         </button>
         <div className='flex w-1/3 justify-start p-4 '>
