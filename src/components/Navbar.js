@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { IconContext } from 'react-icons/lib';
 import { useNavigate, Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 
@@ -49,7 +48,7 @@ function Navbar() {
       });
 
       console.log('Connected', accounts[0]);
-      setAcc(accounts[0]);
+      setAcc(accounts[0].slice(0,6)+'....'+accounts[0].slice(-5));
       setIsAuthenticated(true);
     } catch (e) {
       console.log(e);
@@ -70,7 +69,7 @@ function Navbar() {
           const account = accounts[0];
           console.log('Found an authorized account', account);
           setIsAuthenticated(true);
-          setAcc(account);
+          setAcc(account.slice(0,6)+'....'+account.slice(-5));
         }
       }
     } catch (e) {
@@ -92,7 +91,6 @@ function Navbar() {
   }, []);
 
   return (
-    <IconContext.Provider value={{ color: '#d53f86' }}>
       <nav class='flex sticky bg-[#0a111a] px-12 h-16 z-100 items-center justify-between text-[20px]'>
         <div className='flex items-center'>
           <Link to='/' onClick={closeMobileMenu}>
@@ -167,11 +165,10 @@ function Navbar() {
           </div>
         )}
 
-        <div className='flex md:hidden' onClick={handleClick}>
+        <div className='flex md:hidden text-blue-200' onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
         </div>
       </nav>
-    </IconContext.Provider>
   );
 }
 

@@ -74,7 +74,6 @@ const CreateNFT = ({ open, setOpen }) => {
         setTokenURI(tempURI);
         console.log(' TokenURI: ', tokenURI);
 
-        // Done ??
         await launchNFTHandler(tempURI);
 
         alert('NFTs Published Successfully !!!');
