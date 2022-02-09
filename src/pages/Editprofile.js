@@ -8,6 +8,7 @@ function Editprofile() {
   const [profilePic, setProfilePic] = useState(null);
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
+  const [category, setCategory] = useState();
 
   async function onChangePhoto(e) {
     const file = e.target.files[0];
@@ -51,6 +52,16 @@ function Editprofile() {
           <input type="text" value={email} placeholder="Email" className='block bg-[#0a111a] w-full h-7 shadow-sm' 
           onChange={(event) => setEmail(event.currentTarget.value)}/>
           </label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className='mb-10 block w-full bg-gray-200 text-gray-700 py-3 px-2 rounded focus:outline-none focus:bg-white focus:border-gray-500'
+          >
+            <option value="" selected>Category</option>
+            <option value={'Music'}>Music</option>
+            <option value={'Comic'}>Comic</option>
+            <option value={'Youtuber'}>Youtuber</option>
+          </select>
             <button onClick={createItem} class="bg-[#7138bb] hover:bg-[#9477b8] text-white font-bold py-2 rounded-full">
               Update Profile
             </button>
