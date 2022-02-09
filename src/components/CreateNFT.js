@@ -91,12 +91,15 @@ const CreateNFT = ({ open, setOpen }) => {
     // Launch NFT Returns TokenInfo => tokenId, Price, Amount
     let transaction = await nFTContract.launchNFT(amount, tokenURI);
     let tx = await transaction.wait();
+    console.log('tx', tx);
     let event = tx.events[0];
-    let tokenId = event.args.value.toNumber();
+    // let value = event.args[2];
+    // let tokenId = value.toNumber();
+    let tokenId = event.args.id.toNumber();
+    console.log("id",event.args.id.toNumber());
+    // console.log('Value id', tokenId);
 
-    console.log('Value id', tokenId);
-
-    // NFT is minted, now listing of NFT
+    //NFT is minted, now listing of NFT
     transaction = await marketContract.listNFT(
       NFT_CONTRACT_ADDRESS,
       artistAddress,
