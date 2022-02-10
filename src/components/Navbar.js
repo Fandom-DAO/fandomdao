@@ -66,7 +66,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
       </div>
 
       {isAuthenticated ? (
-        <div className='flex'>
+        <div className='flex justify-self-end'>
           <img
             src={require('../assets/fandomDAO.png')}
             className='w-12 h-12 mr-2 rounded-full hidden md:flex cursor-pointer'
@@ -75,12 +75,12 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               navigate('/profile');
             }}
           />
-          <div className='rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
+          <div className='rounded-md bg-gradient-to-r  w-1/4 from-[#df3f86] to-[#6218a8]'>
             <button
               onClick={() => {
                 navigate('/');
               }}
-              className='table text-white w-full p-2 md:px-2 md:py-2 text-center'
+              className='table text-white truncate w-full  p-2 md:px-2 md:py-2 text-center'
             >
               {acc}
             </button>

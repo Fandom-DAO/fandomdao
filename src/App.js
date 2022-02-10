@@ -72,6 +72,7 @@ export default function App() {
       console.log(e);
     }
   };
+  
   useEffect(() => {
     checkIfWalletIsConnected();
     checkIfUserIsOnCorrectNetwork();
@@ -85,7 +86,7 @@ export default function App() {
           <Route path='/' exact element={<Home />} />
           <Route path='/about' exact element={<About />} />
           <Route path='/contactus' exact element={<ContactUs />} />
-          <Route path='/profile' exact element={<Profile />} />
+          <Route path='/profile' exact element={<Profile acc={acc}/>} />
           <Route path='/editprofile' exact element={<EditProfile acc={acc}/>} />
         </Routes>
       </>
