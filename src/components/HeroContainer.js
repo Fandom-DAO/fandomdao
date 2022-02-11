@@ -3,7 +3,7 @@ import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
 
 const HeroContainer = () => {
   return (
-    <div className='flex w-screen h-full justify-around mt-4 '>
+    <div className='flex w-screen h-full justify-around mt-8 '>
       <div className='flex flex-col w-1/2 p-4 justify-center text-[#d53f86]'>
         <h1 className='font-extrabold text-5xl text-left '>
           Mint an NFT, Become a Fan, get exclusive discounts.

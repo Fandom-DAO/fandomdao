@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 
-const CreateNFT = ({ open, setOpen }) => {
+const CreateNFT = ({ open, setOpen, acc }) => {
   const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
   const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
 
@@ -25,7 +25,7 @@ const CreateNFT = ({ open, setOpen }) => {
   const [price, setPrice] = useState();
   const [image, setImage] = useState();
   const [type, setType] = useState('Premium');
-  const [artistAddress, setArtistAddress] = useState('');
+  const [artistAddress, setArtistAddress] = useState(acc);
   const cancelButtonRef = useRef(null);
   const setValuesToDefault = () => {
     setArtistName('');
@@ -91,12 +91,15 @@ const CreateNFT = ({ open, setOpen }) => {
     // Launch NFT Returns TokenInfo => tokenId, Price, Amount
     let transaction = await nFTContract.launchNFT(amount, tokenURI);
     let tx = await transaction.wait();
+    console.log('tx', tx);
     let event = tx.events[0];
-    let tokenId = event.args.value.toNumber();
+    // let value = event.args[2];
+    // let tokenId = value.toNumber();
+    let tokenId = event.args.id.toNumber();
+    console.log("id",event.args.id.toNumber());
+    // console.log('Value id', tokenId);
 
-    console.log('Value id', tokenId);
-
-    // NFT is minted, now listing of NFT
+    //NFT is minted, now listing of NFT
     transaction = await marketContract.listNFT(
       NFT_CONTRACT_ADDRESS,
       artistAddress,
