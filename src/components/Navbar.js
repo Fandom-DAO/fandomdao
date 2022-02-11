@@ -12,6 +12,8 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  var account = acc.slice(0,6)+'....'+acc.slice(-5);
+
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -75,14 +77,14 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               navigate('/profile');
             }}
           />
-          <div className='rounded-md bg-gradient-to-r  w-1/4 from-[#df3f86] to-[#6218a8]'>
+          <div className='rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
             <button
               onClick={() => {
                 navigate('/');
               }}
-              className='table text-white truncate w-full  p-2 md:px-2 md:py-2 text-center'
+              className='table text-white p-2 md:px-2 md:py-2 text-center'
             >
-              {acc}
+              {account}
             </button>
           </div>
         </div>

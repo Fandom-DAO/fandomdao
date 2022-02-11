@@ -26,6 +26,8 @@ const Profile = ({ acc }) => {
   const [open, setOpen] = useState(false);
   const [marketContract, setMarketContract] = useState();
 
+  var account = acc.slice(0,6)+'. . . . . .'+acc.slice(-5);
+
   const navigate = useNavigate();
 
   const onChangePhoto = (e) => {
@@ -125,7 +127,7 @@ const Profile = ({ acc }) => {
       </div>
       <div className='flex gap-1.5 rounded-lg text-xs bg-otherGray w-36 h-7 mt-28 text-lightGray place-self-center'>
         <img className='ml-1' src={etheriumLogo} />
-        <p className='mt-1.5 truncate text-white'>{acc}</p>
+        <p className='mt-1.5 truncate text-white'>{account}</p>
       </div>
       <div className='flex gap-4 place-self-center mt-6'>
         <button
