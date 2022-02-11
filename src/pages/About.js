@@ -8,7 +8,7 @@ function About() {
   return (
     <div class="mb-4">
       <div class="container flex justify-center mx-auto pt-16">
-        <h1 class="xl:text-4xl text-3xl text-center text-[#df3f86] font-extrabold pb-6 sm:w-4/6 w-5/6 mx-auto">The Talented People Behind the Scenes of the DAO</h1>
+        <h1 class="xl:text-5xl text-3xl text-center text-[#df3f86] font-extrabold pb-6 sm:w-4/6 w-5/6 mx-auto">Talented People Behind the Scenes of the DAO</h1>
       </div>
       <div class="w-full px-10 pt-10">
         <div class="container mx-auto">
