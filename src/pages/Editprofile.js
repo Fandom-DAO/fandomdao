@@ -4,9 +4,11 @@ import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 
+import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
+
 const Editprofile = ({ acc }) => {
-  const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
-  const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
+  // const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
+  // const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
 
   const [nFTContract, setNFTContract] = useState();
   const [marketContract, setMarketContract] = useState();

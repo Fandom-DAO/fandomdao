@@ -5,12 +5,15 @@ import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 
+import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
+
 export default function Cards({ acc }) {
-  const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
-  const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
+  // const NFT_CONTRACT_ADDRESS = '0x05394C3AF50365183Acd6CEc9807EdFD66179e7C';
+  // const MARKET_CONTRACT_ADDRESS = '0xCc0c005B2eB5F59A9a8323E00847413ff1895Ef1';
 
   const [nFTContract, setNFTContract] = useState();
   const [marketContract, setMarketContract] = useState();
+  // const [tokenInfo, setTokenInfo] = useState([]);
 
   const [nfts, setNfts] = useState();
 
@@ -18,7 +21,18 @@ export default function Cards({ acc }) {
     let artistNfts = await marketContract.getNFTsOfArtist(acc);
     // tx = await transaction.wait();
     setNfts(artistNfts);
-    console.log('Artist', artistNfts);
+    console.log('Artist NFTs', artistNfts);
+  };
+
+  const getTokenInfo = async (tokenId) => {
+    console.log('Inside gettokeninfo');
+    const tokenUri = await nFTContract.uri(tokenId);
+    console.log('tokenuri', tokenUri);
+    const metadata = await fetch(tokenUri);
+    const result = await metadata.json();
+    console.log('Metadata', result);
+    // setTokenInfo([...tokenInfo, result]);
+    return result;
   };
 
   useEffect(() => {
@@ -49,7 +63,7 @@ export default function Cards({ acc }) {
   }, []);
 
   useEffect(() => {
-    getNFTs();
+    if (acc) getNFTs();
   }, [acc, marketContract]);
   return (
     <>
@@ -99,36 +113,40 @@ export default function Cards({ acc }) {
       {nfts?.length > 1 ? (
         <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 z-0 text-fuchsia-400'>
           <div className='mt-6 grid grid-cols-1 gap-y-28 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-32'>
-            {nfts.map((nft, index) => (
-              <div key={index} className='group relative'>
-                <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none'>
-                  <img
-                    src='https://ipfs.io/ipfs/QmccvQQrctwZyic85Rk1JE43u2oKMCHTNwm6sr5vgXaLes?filename=prateek_kuhaad.jpg'
-                    alt={nft.name}
-                    className='w-full h-full object-center object-cover lg:w-full lg:h-full'
-                  />
-                </div>
-                <div className='flex justify-between bg-darkgray h-28 rounded'>
-                  <div>
-                    <h3 className='text-sm  text-gray-700 ml-4 mt-4'>
-                      <span aria-hidden='true' className='absolute inset-0' />
-                      {artistData.name}
-                    </h3>
-                    <p className='mt-1 text-sm text-gray-500 ml-4'>
-                      {nft.name} name
-                    </p>
-                    <p className='mt-1 text-sm text-gray-500 ml-4'>
-                      Token Id: {nft.tokenId.toNumber()}
+            {nfts.map(async (nft, index) => {
+              const tokenInfo = await getTokenInfo(nft.tokenId.toNumber());
+
+              return (
+                <div key={index} className='group relative'>
+                  <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none'>
+                    <img
+                      src={tokenInfo.image}
+                      alt={nft.name}
+                      className='w-full h-full object-center object-cover lg:w-full lg:h-full'
+                    />
+                  </div>
+                  <div className='flex justify-between bg-darkgray h-28 rounded'>
+                    <div>
+                      <h3 className='text-sm  text-gray-700 ml-4 mt-4'>
+                        <span aria-hidden='true' className='absolute inset-0' />
+                        {tokenInfo.name}
+                      </h3>
+                      <p className='mt-1 text-sm text-gray-500 ml-4'>
+                        {tokenInfo.name} name
+                      </p>
+                      <p className='mt-1 text-sm text-gray-500 ml-4'>
+                        Token Id: {nft.tokenId.toNumber()}
+                      </p>
+                    </div>
+                    <p className='text-sm font-medium text-gray-900 mr-4 mt-2'>
+                      {nft.tokenPrice.toNumber()} Matic
                     </p>
                   </div>
-                  <p className='text-sm font-medium text-gray-900 mr-4 mt-2'>
-                    {nft.tokenPrice.toNumber()} Matic
-                  </p>
-                </div>
 
-                <div className='border-solid border -mt-8 mx-12 border-white'></div>
-              </div>
-            ))}
+                  <div className='border-solid border -mt-8 mx-12 border-white'></div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (

@@ -12,8 +12,10 @@ import { create, urlSource } from 'ipfs-http-client';
 
 import CreateNFT from '../components/CreateNFT';
 
+import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
+
 const Profile = ({ acc }) => {
-  const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
+  // const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
   const [username, setUsername] = useState();
   const [isShown, setIsShown] = useState(false);
   const [photoFile, setPhotoFile] = useState();
@@ -37,6 +39,8 @@ const Profile = ({ acc }) => {
     const file = photoFile;
     const name = photoFileName;
   };
+
+ 
 
   const getArtist = async () => {
     let _artistInfo = await marketContract.getArtistInfo(acc);

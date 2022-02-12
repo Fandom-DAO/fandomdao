@@ -23,7 +23,7 @@ export default function App() {
 
       const rinkebyChainId = '0x4';
       if (chainId !== rinkebyChainId) {
-        alert('You are not connected to the Rinkeby Test Network!');
+        alert('You are not connected to the Rinkeby Test Network! Please connect to Rinkeby Network');
       }
     } catch (err) {
       console.log(err);
