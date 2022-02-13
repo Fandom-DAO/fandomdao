@@ -30,7 +30,7 @@ const HeroContainer = () => {
               
                 <div className="shadow-2xl max-w-md z-10 rounded-full mt-6 ml-4">
                   <img
-                src={require('../assets/NFT.jpg')}
+                src={require('../assets/nftimage.png')}
                 alt='NFT'
                 className='w-[300px] h-[500px] border-2 border-pinktext rounded-md'
               />
