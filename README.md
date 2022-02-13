@@ -27,7 +27,7 @@ Install all the required packages and dependencies.
   ```
 2. Run the server.
   ```node
-  yarn start
+  yarn run
   ```
 3. [Click here](http://localhost:3000) to view it in the browser OR navigate to
   ```text
