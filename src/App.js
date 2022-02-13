@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <div>
-      {width>600 ?  (
+      {width>800 ?  (
         <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
           <Navbar acc={acc} isAuthenticated={isAuthenticated} connectWalletAction={connectWalletAction}/>
           <>
@@ -96,7 +96,11 @@ export default function App() {
           </>
           <Footer/>
         </div>      ):
-        (<h1>Hello</h1>  )
+        (
+        <div className='flex bg-black text-white h-screen items-center p-4 text-xl font-semibold'>
+          Oops, looks like our devs are too caught up in building out an amazing product. Use your PC to unveil the experience.
+        </div>  
+        )
       }
     </div>
     
