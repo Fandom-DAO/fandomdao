@@ -1,15 +1,13 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
-const SERVICE_ID = process.env.REACT_APP_SERVICE_ID;
-const USER_ID = process.env.REACT_APP_USER_ID;
-
 const Reachout = () => {
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm(SERVICE_ID, 'contact_form', form.current, USER_ID).then(
+    emailjs.sendForm('service_ln12o8c', 'template_4ww2lyd', form.current, 'user_s8S11Xot4QC6gtjGdhLSH')
+    .then(
       (result) => {
         console.log(result.text);
         form.current.reset();
@@ -22,13 +20,10 @@ const Reachout = () => {
   return (
     <div
       id='contact'
-      className=' h-96 p-4 mt-8 flex flex-col gap-8 justify-center items-center'
+      className=' p-4 mt-8 flex flex-col gap-8 justify-center items-center'
     >
-      <h1 className='font-extrabold text-4xl text-white'>
-        Reach out to us if you are an{' '}
-        <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600'>
-          Artist
-        </span>
+      <h1 className='font-extrabold text-3xl sm:text-8xl text-white'>
+        Comming Soon
       </h1>
 
       <form
@@ -37,28 +32,70 @@ const Reachout = () => {
         ref={form}
         onSubmit={sendEmail}
       >
+
+      <label className="block border-b-2 mb-5 text-[#ffffff]">
         <input
-          className='rounded-sm'
-          type='text'
-          placeholder='Name'
-          name='user_name'
+          type="text"
+          name="user_name"
+          className="
+            block
+            bg-[#0a111a]
+            w-full
+            mt-1
+            shadow-sm
+            focus:ring
+            focus:ring-opacity-50
+          "
+          placeholder="Name"
+        />
+      </label>
+
+      <label className="block border-b-2 mb-5 text-[#ffffff]">
+        <input
+          name="user_email"
+          type="email"
+          className="
+            block
+            w-full
+            mt-1
+            bg-[#0a111a]
+            border-gray-300
+            rounded-md
+            shadow-sm
+            focus:border-indigo-300
+            focus:ring
+            focus:ring-indigo-200
+            focus:ring-opacity-50
+          "
+          placeholder="Email address"
           required
         />
+      </label>
 
-        <input
-          className='rounded-sm'
-          type='email'
-          placeholder='Email'
-          name='user_email'
-          required
-        />
-
+      <label className="block mb-10 text-[#ffffff]">
         <textarea
-          className='rounded-sm'
-          placeholder='Enter your message'
-          name='message'
-          required
-        />
+          name="message"
+          className="
+          block
+          w-full
+          mt-1
+          text-[#ffffff]
+          bg-[#0a111a]
+          border-gray-300
+          border-b-2
+          rounded-md
+          shadow-sm
+          focus:border-indigo-300
+          focus:ring
+          focus:ring-indigo-200
+          focus:ring-opacity-50
+          "
+          rows="3"
+          placeholder="Tell us what you're thinking about..."
+        ></textarea>
+      </label>
+
+        
         <button
           type='submit'
           className='rounded p-2 shadow-md shadow-indigo-500/40 mt-2 text-white w-1/2 self-center text-lg font-semibold bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext'

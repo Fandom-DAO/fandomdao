@@ -12,7 +12,7 @@ function App() {
     <div id = "home" className=' bg-bgcolor max-w-screen overflow-hidden min-h-screen text-pinktext'>
       <Header/>
       <HeroContainer/>
-      <Fan/>
+      {/* <Fan/> */}
       <Reachout/>
       <Footer/>
       {/* <Sidebar/> */}
