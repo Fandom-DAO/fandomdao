@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
 import { Routes, Route } from 'react-router-dom';
+import Marketplace from './pages/Marketplace';
 
 export default function App() {
   const [acc, setAcc] = useState('');
@@ -84,6 +85,7 @@ export default function App() {
       <>
         <Routes>
           <Route path='/' exact element={<Home />} />
+          <Route path='/marketplace' exact element={<Marketplace />} />
           <Route path='/about' exact element={<About />} />
           <Route path='/contactus' exact element={<ContactUs />} />
           <Route path='/profile' exact element={<Profile acc={acc}/>} />

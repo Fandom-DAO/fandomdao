@@ -46,7 +46,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
           </li>
 
           <li className='flex rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
-            <Link to='/about' onClick={closeMobileMenu}>
+            <Link to='/marketplace' onClick={closeMobileMenu}>
               <p>NFTs</p>
             </Link>
           </li>
