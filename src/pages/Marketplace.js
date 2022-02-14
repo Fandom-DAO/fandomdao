@@ -6,23 +6,45 @@ import NFTABI from '../utils/NFTabi.json';
 import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
 
 const Marketplace = () => {
-    const [showNFT, setShowNFT] = useState(true);
-    const [marketContract, setMarketContract] = useState();
+    let marketContract;
 
+    const [showNFT, setShowNFT] = useState(true);
+
+    const [state, setState] = useState(true);
+
+    let artists;
     // These are Array of arrays
     const [allNFTs, setAllNFTs] = useState([]);
     const [allArtists, setAllArtists] = useState([]);
 
+    // Artist Address => Index in allArtist Array
+    let artistMap = new Map();
+
+    // NFT Token ID => Artist Name
+    const [nftToArtist, setNftToArtist] = useState(new Map());
+
     const getAllNFTs = async() => {
         let res = await marketContract.getAllNFTs();
+
+        let tempMap = new Map();
+
+        res.forEach(nft => {
+            tempMap.set(nft[0], artists[artistMap.get(nft[5])][1])
+        })
+
+        setNftToArtist(tempMap);
         setAllNFTs(res);
-        // console.log(res[0]);
     }
 
     const getAllArtists = async() => {
         let res = await marketContract.getAllArtists();
-        setAllArtists(res);
+        artists = res;
         // console.log(res[0]);
+
+        res.forEach((artist, idx) => {
+            artistMap.set(artist[0], idx);
+        });
+        setAllArtists(res);
     }
 
     useEffect(() => {
@@ -33,15 +55,15 @@ const Marketplace = () => {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
 
-                const marketPlaceContract = new ethers.Contract(
+                marketContract = new ethers.Contract(
                     MARKET_CONTRACT_ADDRESS,
                     MarketABI.abi,
                     signer
                 );
 
-                setMarketContract(marketPlaceContract);
-                getAllNFTs();
                 getAllArtists();
+                getAllNFTs();
+                // setAllNFTsToArtists();
             }
         } catch (err) {
             console.log('In error: ' + err);
@@ -82,7 +104,7 @@ const Marketplace = () => {
                                 nft[3] - nft[2]
                             } / {
                                 nft[3]
-                            } NFTs left
+                            } NFTs left - By {(nft !== undefined) && nftToArtist.get(nft[0])}
                         </div>
                     )
                 })
