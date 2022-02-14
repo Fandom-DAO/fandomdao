@@ -7,6 +7,7 @@ import Fan from './components/Fan';
 import Reachout from './components/Reachout';
 import Footer from './components/Footer';
 import Discord from './components/Discord';
+import Twitter from './components/Twitter';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ function App() {
       <>
         <Routes>
           <Route path='/discord' exact element={<Discord/>}/>
+          <Route path='/twitter' exact element={<Twitter/>}/>
         </Routes>
       </>
     </div>

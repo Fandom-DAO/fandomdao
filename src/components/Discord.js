@@ -8,7 +8,7 @@ function Discord() {
 
   return (
     <div>
-      <h2>Contact</h2>
+      <h2>Discord</h2>
     </div>
   );
 }
