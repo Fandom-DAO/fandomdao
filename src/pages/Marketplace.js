@@ -65,7 +65,13 @@ const Marketplace = () => {
         
         */
         <div style={{color: 'white'}}>
-            <button style={{padding: '1em', backgroundColor:'purple'}} onClick={() => setShowNFT(!showNFT)}>Change Data</button>
+            <button style={{padding: '1em', backgroundColor:'purple'}} onClick={() => setShowNFT(!showNFT)}>
+                {
+                    showNFT?
+                    "Show Artists":
+                    "Show NFTs"
+                }
+            </button>
             {   
                 (showNFT)?
                 (
