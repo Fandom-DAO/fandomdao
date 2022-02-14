@@ -32,7 +32,7 @@ const Reachout = () => {
       <label className="flex w-[80%] text-[#ffffff]">
         <input
           type="text"
-          name="user_name"
+          name="name"
           className="
             w-full
             my-1
@@ -46,7 +46,7 @@ const Reachout = () => {
 
       <label className="flex w-[80%] text-[#ffffff]">
         <input
-          name="user_email"
+          name="email"
           type="email"
           className="
             w-full
