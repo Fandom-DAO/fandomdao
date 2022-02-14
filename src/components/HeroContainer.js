@@ -20,7 +20,7 @@ const HeroContainer = () => {
                   <a href='https://twitter.com/fandomdao'>
                     <FaTwitter className='mr-2 text-3xl' />
                   </a>
-                  <a href='https://twitter.com/fandomdao'>
+                  <a href='https://github.com/Fandom-DAO/'>
                     <FaGithub className='mr-2 text-3xl' />
                   </a>
                 </div>
