@@ -14,7 +14,7 @@ const HeroContainer = () => {
                   Become a Fan
                 </div></a> 
                 <div className='flex justify-center items-center sm:justify-start p-4 '>
-                  <a href='https://discord.gg/tzmgUWKK'>
+                  <a href='https://discord.gg/ag7tnjNd6R'>
                     <FaDiscord className='mr-2 text-3xl' />
                   </a>
                   <a href='https://twitter.com/fandomdao'>
