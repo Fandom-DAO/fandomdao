@@ -23,7 +23,7 @@ const Reachout = () => {
       className=' p-4 mt-8 flex flex-col gap-8 justify-center items-center'
     >
       <h1 className='font-extrabold text-3xl sm:text-8xl text-white'>
-        Comming Soon
+        Coming Soon
       </h1>
 
       <form
