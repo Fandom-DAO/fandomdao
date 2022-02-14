@@ -15,7 +15,7 @@ const Header = () => {
         </div>
         
         <div className='text-white font-semibold rounded-lg p-2  bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext'>
-          Comming Soon
+          Coming Soon
         </div>
       </div>
     </div>
