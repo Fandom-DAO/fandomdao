@@ -26,7 +26,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   }, []);
 
   return (
-    <nav class='flex sticky bg-[#0a111a] px-12 h-16 z-100 items-center justify-between text-[20px]'>
+    <nav className='flex sticky bg-[#0a111a] px-12 h-16 z-100 items-center justify-between text-[20px]'>
       <div className='flex items-center'>
         <Link to='/' onClick={closeMobileMenu}>
           <img
