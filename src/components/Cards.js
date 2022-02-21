@@ -18,8 +18,8 @@ export default function Cards({ acc }) {
   const [nfts, setNfts] = useState();
 
   const getNFTs = async () => {
+    console.log("Inside get NFTs")
     let artistNfts = await marketContract.getNFTsOfArtist(acc);
-    // tx = await transaction.wait();
     setNfts(artistNfts);
     console.log('Artist NFTs', artistNfts);
   };
@@ -110,17 +110,17 @@ export default function Cards({ acc }) {
           </button>
         </div>
       )} */}
-      {nfts?.length > 1 ? (
+      {nfts?.length > 0 ? (
         <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 z-0 text-fuchsia-400'>
           <div className='mt-6 grid grid-cols-1 gap-y-28 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-32'>
             {nfts.map(async (nft, index) => {
-              const tokenInfo = await getTokenInfo(nft.tokenId.toNumber());
+              {/* const tokenInfo = await getTokenInfo(nft.tokenId.toNumber()); */}
 
               return (
                 <div key={index} className='group relative'>
                   <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none'>
                     <img
-                      src={tokenInfo.image}
+                      src='{tokenInfo.image}'
                       alt={nft.name}
                       className='w-full h-full object-center object-cover lg:w-full lg:h-full'
                     />
@@ -129,10 +129,10 @@ export default function Cards({ acc }) {
                     <div>
                       <h3 className='text-sm  text-gray-700 ml-4 mt-4'>
                         <span aria-hidden='true' className='absolute inset-0' />
-                        {tokenInfo.name}
+                        'name'
                       </h3>
                       <p className='mt-1 text-sm text-gray-500 ml-4'>
-                        {tokenInfo.name} name
+                         name
                       </p>
                       <p className='mt-1 text-sm text-gray-500 ml-4'>
                         Token Id: {nft.tokenId.toNumber()}
