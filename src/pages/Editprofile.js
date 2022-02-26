@@ -84,7 +84,7 @@ const Editprofile = ({ acc }) => {
         <h2 className='text-[#fff] text-lg font-semibold pb-4'>
           Customize you username and profile picture
         </h2>
-        <label class='block border-b-2 mb-10 text-[#ffffff]'>
+        <label className='block border-b-2 mb-10 text-[#ffffff]'>
           <input
             type='text'
             value={username}
@@ -94,7 +94,7 @@ const Editprofile = ({ acc }) => {
           />
         </label>
 
-        <label class='block border-b-2 mb-10 text-[#ffffff]'>
+        <label className='block border-b-2 mb-10 text-[#ffffff]'>
           <input
             type='text'
             value={email}
@@ -117,7 +117,7 @@ const Editprofile = ({ acc }) => {
         </select>
         <button
           onClick={createItem}
-          class='bg-[#7138bb] hover:bg-[#9477b8] text-white font-bold py-2 rounded-full'
+          className='bg-[#7138bb] hover:bg-[#9477b8] text-white font-bold py-2 rounded-full'
         >
           Update Profile
         </button>

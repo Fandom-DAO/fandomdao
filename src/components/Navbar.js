@@ -3,6 +3,7 @@ import './Navbar.css';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { ethers } from 'ethers';
+import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
 
 const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  var account = acc.slice(0,6)+'....'+acc.slice(-5);
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -26,11 +29,15 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   }, []);
 
   return (
-    <nav class='flex sticky bg-[#0a111a] px-12 h-16 z-100 items-center justify-between text-[20px]'>
-      <div className='flex items-center'>
+    <div>
+    <div className={click?"fixed h-screen w-screen overflow-hidden":"fixed w-screen overflow-hidden"}>
+      <nav className='bg-darkgray backdrop-filter backdrop-blur h-16 flex items-center justify-between px-4 sm:pr-8'>
+      <div>
         <Link to='/' onClick={closeMobileMenu}>
           <img
-            className='rounded-md w-10 md:w-12'
+            className='rounded-lg'
+            width={50}
+            height={100}
             src={require('../assets/fandomDAO.png')}
             alt='Logo'
           />
@@ -62,27 +69,32 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               <p>Contact Us</p>
             </Link>
           </li>
+          <li className='flex sm:hidden rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
+            <Link to='/contactus' onClick={closeMobileMenu}>
+              <FaDiscord />
+            </Link>
+          </li>
         </ul>
       </div>
 
       {isAuthenticated ? (
-        <div className='flex justify-self-end'>
+        <div className='flex'>
           <img
             src={require('../assets/fandomDAO.png')}
             className='w-12 h-12 mr-2 rounded-full hidden md:flex cursor-pointer'
-            alt='nft'
+            alt='profilepic'
             onClick={() => {
               navigate('/profile');
             }}
           />
-          <div className='rounded-md bg-gradient-to-r  w-1/4 from-[#df3f86] to-[#6218a8]'>
+          <div className='rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
             <button
               onClick={() => {
                 navigate('/');
               }}
-              className='table text-white truncate w-full  p-2 md:px-2 md:py-2 text-center'
+              className='table text-white p-2 md:px-2 md:py-2 text-center'
             >
-              {acc}
+              {account}
             </button>
           </div>
         </div>
@@ -93,7 +105,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               connectWalletAction();
               navigate('/editprofile');
             }}
-            className='table rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8] text-white w-full p-2 md:px-2 md:py-2 text-center'
+            className='table rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8] text-white sm:w-full p-2 md:px-2 md:py-2 text-center'
           >
             Connect Wallet
           </button>
@@ -104,6 +116,23 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
         {click ? <FaTimes /> : <FaBars />}
       </div>
     </nav>
+    
+
+
+    <div class="sm:flex flex-col bg-transarent text-[#d53f86] text-4xl -mt-16 h-screen justify-end z-50 fixed hidden gap-5">
+          <a href='https://discord.gg/tzmgUWKK'>
+            <FaDiscord className='mr-2' />
+          </a>
+          <a href='https://twitter.com/fandomdao'>
+            <FaTwitter className='mr-2' />
+          </a>
+          <a href='https://twitter.com/fandomdao'>
+            <FaGithub className='mr-2' />
+          </a>
+    </div>
+    </div>
+    <div className='h-16'></div>
+    </div>
   );
 };
 

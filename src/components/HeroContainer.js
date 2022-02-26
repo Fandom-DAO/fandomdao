@@ -3,38 +3,28 @@ import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
 
 const HeroContainer = () => {
   return (
-    <div className='flex w-screen h-full justify-around mt-8 '>
-      <div className='flex flex-col w-1/2 p-4 justify-center text-[#d53f86]'>
-        <h1 className='font-extrabold text-5xl text-left '>
-          Mint an NFT, Become a Fan, get exclusive discounts.
-        </h1>
-        <p className='mt-8  text-lg text-left'>
-          We help artists and fans connect better. Mint your artist's NFTs and
-          get exclusive discounts on their shows and events.
-        </p>
-        <button className='rounded p-2 shadow-md  shadow-indigo-500/40   w-1/3 mt-12 text-white text-lg font-semibold bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
-          Become a Fan
-        </button>
-        <div className='flex w-1/3 justify-start p-4 '>
-          <a href='https://discord.gg/tzmgUWKK'>
-            <FaDiscord className='mr-2' />
-          </a>
-          <a href='https://twitter.com/fandomdao'>
-            <FaTwitter className='mr-2' />
-          </a>
-          <a href='https://twitter.com/fandomdao'>
-            <FaGithub className='mr-2' />
-          </a>
-        </div>
-      </div>
-      <div>
-        <img
-          src={require('../assets/NFT.jpg')}
-          alt='NFT'
-          width={300}
-          height={500}
-          className='border-2 border-pinktext rounded-md'
-        />
+    <div className="m-auto max-w-6xl px-12 text-pinktext">
+      <div className="flex flex-col justify-center items-center sm:flex-row">
+          <div className="sm:w-1/2 max-w-md flex flex-col justify-center">
+            <div className="text-5xl font-black">Mint an NFT, Become a Fan, Get exclusive discounts.</div>
+            <div className="text-lg mt-4">We help creators and fans connect better. Mint creators's NFTs and get exclusive discounts on their shows and events.</div>
+            <div className="my-5 h-fit">
+                <a href='https://discord.gg/ag7tnjNd6R'>
+                <div className='rounded text-center max-w-10 p-2 shadow-md shadow-indigo-500/40 sm:w-1/2 text-white text-lg font-semibold bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext'>
+                  Become a Fan
+                </div></a> 
+            </div>
+          </div>
+          <div className="flex justify-center sm:justify-end w-full sm:w-1/2 -mt-5">
+              
+                <div className="shadow-2xl max-w-md z-10 rounded-full mt-6 ml-4">
+                  <img
+                src={require('../assets/NFT.jpg')}
+                alt='NFT'
+                className='w-[300px] h-[500px] border-2 border-pinktext rounded-md -z-50'
+              />
+            </div>
+          </div>
       </div>
     </div>
   );

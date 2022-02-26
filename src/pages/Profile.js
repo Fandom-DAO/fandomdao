@@ -28,6 +28,8 @@ const Profile = ({ acc }) => {
   const [open, setOpen] = useState(false);
   const [marketContract, setMarketContract] = useState();
 
+  var account = acc.slice(0,6)+'. . . . . .'+acc.slice(-5);
+
   const navigate = useNavigate();
 
   const onChangePhoto = (e) => {
@@ -80,17 +82,17 @@ const Profile = ({ acc }) => {
       <div className='grid mx-12 h-80'>
         <img
           className=' rounded-lg bg-white w-full h-80 object-cover place-self-center'
-          src=''
+          src={require('../assets/fallbackBanner.jpg')}
           alt='profileBanner'
         />
         <img
           className='rounded-[50%] bg-white w-32 h-32 object-cover place-self-center -mt-16'
-          src={artistInfo.artistImageURI}
+          src={artistInfo.artistImageURI?artistInfo.artistImageURI.replace(".infura", ""):''}
           alt='profilePic'
         />
         <button
           onClick={() => setIsShown(true)}
-          className='justify-self-end w-28 -mt-28 mr-2 bg-[#3f313110] text-black text-xs h-10 rounded-lg border-2 border-black'
+          className='hidden justify-self-end w-28 -mt-28 mr-2 bg-[#3f313110] text-black text-xs h-10 rounded-lg border-2 border-black'
         >
           Edit
         </button>
@@ -102,7 +104,7 @@ const Profile = ({ acc }) => {
               type='file'
               accept='image/*'
               multiple={false}
-              id='profilePhoto'
+              id='profileBanner'
               onChange={onChangePhoto}
             />
             <button
@@ -129,7 +131,7 @@ const Profile = ({ acc }) => {
       </div>
       <div className='flex gap-1.5 rounded-lg text-xs bg-otherGray w-36 h-7 mt-28 text-lightGray place-self-center'>
         <img className='ml-1' src={etheriumLogo} />
-        <p className='mt-1.5 truncate text-white'>{acc}</p>
+        <p className='mt-1.5 truncate text-white'>{account}</p>
       </div>
       <div className='flex gap-4 place-self-center mt-6'>
         <button

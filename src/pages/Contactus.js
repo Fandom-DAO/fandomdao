@@ -6,21 +6,23 @@ export default function ContactUs() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-
+    
     emailjs.sendForm('service_ln12o8c', 'template_4ww2lyd', form.current, 'user_s8S11Xot4QC6gtjGdhLSH')
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
       });
+    form.current.reset();
+    alert("Thanks for contacting us!!")
   };
 
   return (
-    <div class="w-fit h-screen md:w-96 md:max-w-full ml-24">
-      <div class="text-[#ffffff] text-5xl font-bold">
+    <div class="flex flex-col items-center justify-center min-w-full h-screen md:max-w-full ">
+      <div class="text-[#ffffff] text-5xl font-bold mb-5">
         Contact Us
       </div>
-  <div class="p-6 sm:rounded-md">
+  <div class="p-6 w-96 sm:rounded-md">
     <form ref={form} onSubmit={sendEmail}>
       <label class="block border-b-2 mb-20 text-[#ffffff]">
         <input
@@ -59,7 +61,7 @@ export default function ContactUs() {
           required
         />
       </label>
-      <label class="block mb-20 text-[#ffffff]">
+      <label class="block mb-10 text-[#ffffff]">
         <textarea
           name="message"
           class="
