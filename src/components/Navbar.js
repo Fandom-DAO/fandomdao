@@ -31,7 +31,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   return (
     <div>
     <div className={click?"fixed h-screen w-screen overflow-hidden":"fixed w-screen overflow-hidden"}>
-      <nav className='bg-darkgray backdrop-filter backdrop-blur h-16 flex items-center justify-between px-4 sm:pr-8'>
+      <nav className='bg-darkgray backdrop-filter backdrop-blur h-16 flex items-center justify-between px-4 sm:pr-8 z-50'>
       <div>
         <Link to='/' onClick={closeMobileMenu}>
           <img

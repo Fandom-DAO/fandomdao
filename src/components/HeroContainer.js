@@ -17,11 +17,11 @@ const HeroContainer = () => {
           </div>
           <div className="flex justify-center sm:justify-end w-full sm:w-1/2 -mt-5">
               
-                <div className="shadow-2xl max-w-md z-10 rounded-full mt-6 ml-4">
+                <div className="shadow-2xl max-w-md rounded-full mt-6 ml-4">
                   <img
                 src={require('../assets/NFT.jpg')}
                 alt='NFT'
-                className='w-[300px] h-[500px] border-2 border-pinktext rounded-md -z-50'
+                className='w-[300px] h-[500px] border-2 flex border-pinktext rounded-md z-[-999]'
               />
             </div>
           </div>
