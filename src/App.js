@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <div>
-      {width>800 ?  (
+      {width ?  (
         <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
           <Navbar acc={acc} isAuthenticated={isAuthenticated} connectWalletAction={connectWalletAction}/>
           <>
