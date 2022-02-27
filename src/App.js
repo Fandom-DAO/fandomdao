@@ -3,18 +3,19 @@ import About from './pages/About';
 import ContactUs from './pages/Contactus';
 import Profile from './pages/Profile';
 import EditProfile from './pages/Editprofile';
+import Marketplace from './pages/Marketplace';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
 
 import { Routes, Route } from 'react-router-dom';
-import Marketplace from './pages/Marketplace';
+
 
 export default function App() {
   const [acc, setAcc] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [width, setWidth] = React.useState(window.innerWidth);
 
   const checkIfUserIsOnCorrectNetwork = async () => {
     try {
@@ -80,19 +81,29 @@ export default function App() {
   }, []);
 
   return (
-    <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
-      <Navbar acc={acc} isAuthenticated={isAuthenticated} connectWalletAction={connectWalletAction}/>
-      <>
-        <Routes>
-          <Route path='/' exact element={<Home />} />
-          <Route path='/marketplace' exact element={<Marketplace />} />
-          <Route path='/about' exact element={<About />} />
-          <Route path='/contactus' exact element={<ContactUs />} />
-          <Route path='/profile' exact element={<Profile acc={acc}/>} />
-          <Route path='/editprofile' exact element={<EditProfile acc={acc}/>} />
-        </Routes>
-      </>
-      <Footer />
+    <div>
+      {width ?  (
+        <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
+          <Navbar acc={acc} isAuthenticated={isAuthenticated} connectWalletAction={connectWalletAction}/>
+          <>
+            <Routes>
+              <Route path='/' exact element={<Home />} />
+              <Route path='/about' exact element={<About />} />
+              <Route path='/marketplace' exact element={<Marketplace />} />
+              <Route path='/contactus' exact element={<ContactUs />} />
+              <Route path='/profile' exact element={<Profile acc={acc}/>} />
+              <Route path='/editprofile' exact element={<EditProfile acc={acc}/>} /> 
+            </Routes>
+          </>
+          <Footer/>
+        </div>      ):
+        (
+        <div className='flex bg-black text-white h-screen items-center p-4 text-xl font-semibold'>
+          Oops, looks like our devs are too caught up in building out an amazing product. Use your PC to unveil the experience.
+        </div>  
+        )
+      }
     </div>
+    
   );
 }
