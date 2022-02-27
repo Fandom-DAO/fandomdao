@@ -3,12 +3,14 @@ import About from './pages/About';
 import ContactUs from './pages/Contactus';
 import Profile from './pages/Profile';
 import EditProfile from './pages/Editprofile';
+import Marketplace from './pages/Marketplace';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 import React, { useState, useEffect } from 'react';
 
 import { Routes, Route } from 'react-router-dom';
+
 
 export default function App() {
   const [acc, setAcc] = useState('');
@@ -78,8 +80,6 @@ export default function App() {
     checkIfUserIsOnCorrectNetwork();
   }, []);
 
-  
-
   return (
     <div>
       {width ?  (
@@ -89,6 +89,7 @@ export default function App() {
             <Routes>
               <Route path='/' exact element={<Home />} />
               <Route path='/about' exact element={<About />} />
+              <Route path='/marketplace' exact element={<Marketplace />} />
               <Route path='/contactus' exact element={<ContactUs />} />
               <Route path='/profile' exact element={<Profile acc={acc}/>} />
               <Route path='/editprofile' exact element={<EditProfile acc={acc}/>} /> 
