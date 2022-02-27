@@ -12,7 +12,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
+  
   var account = acc.slice(0,6)+'....'+acc.slice(-5);
 
   const showButton = () => {
@@ -53,7 +53,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
           </li>
 
           <li className='flex rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
-            <Link to='/about' onClick={closeMobileMenu}>
+            <Link to='/marketplace' onClick={closeMobileMenu}>
               <p>NFTs</p>
             </Link>
           </li>
