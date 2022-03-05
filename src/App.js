@@ -127,7 +127,7 @@ export default function App() {
             <Routes>
               <Route path='/' exact element={<Home />} />
               <Route path='/about' exact element={<About />} />
-              <Route path='/marketplace' exact element={<Marketplace />} />
+              <Route path='/marketplace' exact element={<Marketplace acc={acc} marketContract={marketcontract} />} />
               <Route path='/contactus' exact element={<ContactUs />} />
               <Route path='/profile' exact element={<Profile acc={acc} />} />
               <Route
