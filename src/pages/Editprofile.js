@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 
-import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
+import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
 
 const Editprofile = ({ acc }) => {
   // const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
@@ -19,6 +19,7 @@ const Editprofile = ({ acc }) => {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [category, setCategory] = useState();
+
 
   async function onChangePhoto(e) {
     const file = e.target.files[0];
@@ -35,15 +36,18 @@ const Editprofile = ({ acc }) => {
 
   async function createItem() {
     if (profilePic && category && username) {
+      console.log('adding artist');
       let transaction = await marketContract.addArtist(
         acc,
         username,
         profilePic,
         category
       );
+      
       let tx = await transaction.wait();
-      transaction = await marketContract.getArtistInfo(acc);
       // tx = await transaction.wait();
+      transaction = await marketContract.getArtistInfo(acc);
+
       console.log('Artist', transaction);
     }
   }
