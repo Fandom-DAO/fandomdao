@@ -4,7 +4,7 @@ import { create } from 'ipfs-http-client';
 import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
-import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
+import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
 const CreateNFT = ({ open, setOpen, acc }) => {
   // const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
   // const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
@@ -24,7 +24,7 @@ const CreateNFT = ({ open, setOpen, acc }) => {
   const [description, setDescription] = useState();
   const [amount, setAmount] = useState();
   const [price, setPrice] = useState();
-  const [image, setImage] = useState();
+  const [imageURL, setImageURL] = useState();
   const [type, setType] = useState('Premium');
   const [artistAddress, setArtistAddress] = useState(acc);
   const cancelButtonRef = useRef(null);
@@ -32,19 +32,25 @@ const CreateNFT = ({ open, setOpen, acc }) => {
     setNftName('');
     setDescription('');
     setAmount(0);
-    setImage('');
+    setImageURL('');
     setType('Premium');
     setPrice(0);
   };
-  const handleimageUpload = (event) => {
+  const handleimageUpload = async (event) => {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      const base64data = reader.result;
-      setImage(base64data);
-    };
+    // reader.readAsDataURL(file);
+    // reader.onloadend = () => {
+    //   const base64data = reader.result;
+    //   setImageURL(base64data);
+    // };
+
+    const addFile = await client.add(file, {
+      progress: (prog) => console.log(`received: ${prog}`),
+    });
+    const url = `https://ipfs.infura.io/ipfs/${addFile.path}`;
+    setImageURL(url);
   };
   const handleCancel = () => {
     setOpen(false);
@@ -53,12 +59,12 @@ const CreateNFT = ({ open, setOpen, acc }) => {
 
   async function publishNFT() {
     // e.preventDefault();
-    if (nftName && description && amount && price && image && type) {
+    if (nftName && description && amount && price && imageURL && type) {
       // Sending the meta-data to IPFS
       const nftObj = JSON.stringify({
         name: nftName,
         desription: description,
-        image: image,
+        image: imageURL,
         attributes: [
           {
             trait_type: 'level',
@@ -97,10 +103,19 @@ const CreateNFT = ({ open, setOpen, acc }) => {
     // let value = event.args[2];
     // let tokenId = value.toNumber();
     let tokenId = event.args.id.toNumber();
-    console.log("id",event.args.id.toNumber());
+    console.log('id', event.args.id.toNumber());
     // console.log('Value id', tokenId);
 
-    console.log(acc, tokenId, amount, price, nftName, description, image, type);
+    console.log(
+      acc,
+      tokenId,
+      amount,
+      price,
+      nftName,
+      description,
+      imageURL,
+      type
+    );
 
     //NFT is minted, now listing of NFT
     transaction = await marketContract.listNFT(
@@ -111,7 +126,7 @@ const CreateNFT = ({ open, setOpen, acc }) => {
       price,
       nftName,
       description,
-      'https://ipfs.io/ipfs/QmYfmHvCZsxgzPWMUynMDNGYpAu4VYCU2R6mMg37hX2E25?filename=fire.json',
+      imageURL,
       type
     );
     transaction.gasLimit = 3000000;
@@ -318,8 +333,7 @@ const CreateNFT = ({ open, setOpen, acc }) => {
                         </div>
                         <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                           <img
-                            src={image || defaultImage}
-                            onError={(e) => (e.target.src = defaultImage)}
+                            src={imageURL} alt="uploadedImage"
                             className='w-full h-full object-center object-cover lg:w-full lg:h-full'
                           />
                         </div>
@@ -332,7 +346,7 @@ const CreateNFT = ({ open, setOpen, acc }) => {
                 <button
                   type='button'
                   className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-blue focus:outline-none bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext sm:ml-3 sm:w-auto sm:text-sm'
-                  onClick={() => publishNFT()}
+                  onClick={publishNFT}
                 >
                   Publish NFTs
                 </button>

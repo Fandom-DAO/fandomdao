@@ -29,6 +29,7 @@ const Marketplace = ({acc}) => {
 
   const getAllNFTs = async () => {
     const res = await marketContract.current.getAllNFTs();
+    console.log("res", res)
     const tempMap = new Map();
 
     res.forEach((nft) => {
@@ -67,19 +68,21 @@ const Marketplace = ({acc}) => {
     alert("You have successfully bought the NFT !!\nHere is your txn hash", tx);
   };
 
-  useEffect(async () => {
+  
+
+  useEffect( () => {
     try {
       const { ethereum } = window;
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const accounts = await ethereum.request({ method: "eth_accounts" });
+        // const accounts = await ethereum.request({ method: "eth_accounts" });
 
-        if (accounts.length !== 0) {
-          const account = accounts[0];
-          setCurrentAddress(account);
-        }
+        // if (accounts.length !== 0) {
+        //   const account = accounts[0];
+        //   setCurrentAddress(account);
+        // }
 
         marketContract.current = new ethers.Contract(
           MARKET_CONTRACT_ADDRESS,
@@ -87,8 +90,8 @@ const Marketplace = ({acc}) => {
           signer
         );
 
-        await getAllArtists();
-        await getAllNFTs();
+        getAllArtists();
+        getAllNFTs();
         // setAllNFTsToArtists();
       }
     } catch (err) {

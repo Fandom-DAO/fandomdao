@@ -77,7 +77,6 @@ export default function Cards({ acc }) {
         <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 z-0 text-fuchsia-400'>
           <div className='mt-6 grid grid-cols-1 gap-y-28 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-32'>
             {nfts.map((nft, index) => {
-              {/* const tokenInfo = await getTokenInfo(nft.tokenId.toNumber()); */}
               return (
                 <div key={index} className='group relative'>
                   <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none'>
@@ -91,7 +90,7 @@ export default function Cards({ acc }) {
                     <div>
                       <h3 className='text-sm  text-gray-700 ml-4 mt-4'>
                         <span aria-hidden='true' className='absolute inset-0' />
-                        'name'
+                        {nft.tokenName}
                       </h3>
                       <p className='mt-1 text-sm text-gray-500 ml-4'>
                          name
