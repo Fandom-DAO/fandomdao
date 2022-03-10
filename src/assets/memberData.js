@@ -79,6 +79,16 @@ export const memberData = {
         "twitter": "https://twitter.com/SainiRochak",
         "linkedin": "https://www.linkedin.com/in/rochak-saini-abb0551ab/",
         "instagram": "https://www.instagram.com/_rochak._/"
+      },
+      {
+        "name": "Ishan",
+        "imageSrc": "https://drive.google.com/uc?export=view&id=1-M_FAE2s_h-g39pudeSgbturp7mfefal",
+        "contribution": "Community Manager",
+        "portfolio": "",
+        "github": "",
+        "twitter": "https://twitter.com/SainiRochak",
+        "linkedin": "https://www.linkedin.com/in/rochak-saini-abb0551ab/",
+        "instagram": "https://www.instagram.com/_rochak._/"
       }
     ]
   }

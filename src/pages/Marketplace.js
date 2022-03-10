@@ -9,7 +9,9 @@ import { FiBox, FiDollarSign, FiUsers } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
 import ArtistCard from "../components/ArtistCard";
 
-const Marketplace = ({acc, marketContract}) => {
+const Marketplace = ({acc}) => {
+  const marketContract = useRef('');
+
   const buttonStyles =
     "text-white px-5 py-2 rounded-lg border mr-8 border-slate-400 flex items-center justify-evenly";
 

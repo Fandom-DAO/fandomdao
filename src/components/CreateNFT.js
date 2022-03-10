@@ -14,12 +14,13 @@ const CreateNFT = ({ open, setOpen, acc }) => {
 
   // This is the tokenURI
   const [tokenURI, setTokenURI] = useState();
+  const provider = useRef();
 
   const client = create('https://ipfs.infura.io:5001/api/v0');
 
   const defaultImage =
     'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640';
-  const [artistName, setArtistName] = useState();
+  const [nftName, setNftName] = useState();
   const [description, setDescription] = useState();
   const [amount, setAmount] = useState();
   const [price, setPrice] = useState();
@@ -28,7 +29,7 @@ const CreateNFT = ({ open, setOpen, acc }) => {
   const [artistAddress, setArtistAddress] = useState(acc);
   const cancelButtonRef = useRef(null);
   const setValuesToDefault = () => {
-    setArtistName('');
+    setNftName('');
     setDescription('');
     setAmount(0);
     setImage('');
@@ -52,10 +53,10 @@ const CreateNFT = ({ open, setOpen, acc }) => {
 
   async function publishNFT() {
     // e.preventDefault();
-    if (artistName && description && amount && price && image && type) {
+    if (nftName && description && amount && price && image && type) {
       // Sending the meta-data to IPFS
       const nftObj = JSON.stringify({
-        name: artistName,
+        name: nftName,
         desription: description,
         image: image,
         attributes: [
@@ -99,14 +100,21 @@ const CreateNFT = ({ open, setOpen, acc }) => {
     console.log("id",event.args.id.toNumber());
     // console.log('Value id', tokenId);
 
+    console.log(acc, tokenId, amount, price, nftName, description, image, type);
+
     //NFT is minted, now listing of NFT
     transaction = await marketContract.listNFT(
       NFT_CONTRACT_ADDRESS,
-      artistAddress,
+      acc,
       tokenId,
       amount,
-      price
+      price,
+      nftName,
+      description,
+      'https://ipfs.io/ipfs/QmYfmHvCZsxgzPWMUynMDNGYpAu4VYCU2R6mMg37hX2E25?filename=fire.json',
+      type
     );
+    transaction.gasLimit = 3000000;
     tx = await transaction.wait();
     console.log('Item listed');
   };
@@ -116,8 +124,8 @@ const CreateNFT = ({ open, setOpen, acc }) => {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+        provider.current = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.current.getSigner();
         const nftContract = new ethers.Contract(
           NFT_CONTRACT_ADDRESS,
           NFTABI.abi,
@@ -193,8 +201,8 @@ const CreateNFT = ({ open, setOpen, acc }) => {
                             Artist Name
                           </label>
                           <input
-                            value={artistName}
-                            onChange={(e) => setArtistName(e.target.value)}
+                            value={nftName}
+                            onChange={(e) => setNftName(e.target.value)}
                             className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
                             id='grid-name'
                             type='text'
