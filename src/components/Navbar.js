@@ -90,7 +90,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
           <div className='rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
             <button
               onClick={() => {
-                navigate('/');
+                navigate('/profile');
               }}
               className='table text-white p-2 md:px-2 md:py-2 text-center'
             >
@@ -103,7 +103,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
           <button
             onClick={() => {
               connectWalletAction();
-              navigate('/editprofile');
+              
             }}
             className='table rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8] text-white sm:w-full p-2 md:px-2 md:py-2 text-center'
           >

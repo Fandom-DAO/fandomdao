@@ -12,7 +12,7 @@ import MarketABI from './utils/Marketabi.json';
 
 import React, { useState, useEffect } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from './config';
 
@@ -22,6 +22,8 @@ export default function App() {
   const [nftcontract, setNftcontract] = useState('');
   const [marketcontract, setMarketcontract] = useState('');
   const [width, setWidth] = React.useState(window.innerWidth);
+
+  const navigate = useNavigate();
 
   const checkIfUserIsOnCorrectNetwork = async () => {
     try {
@@ -56,6 +58,7 @@ export default function App() {
       console.log('Connected', accounts[0]);
       setAcc(accounts[0]);
       setIsAuthenticated(true);
+      navigate('/profile')
     } catch (e) {
       console.log(e);
     }

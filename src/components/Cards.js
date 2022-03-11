@@ -1,5 +1,5 @@
 import { artistData } from '../assets/data';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ethers } from 'ethers';
 
 import MarketABI from '../utils/Marketabi.json';
@@ -11,19 +11,21 @@ export default function Cards({ acc }) {
   // const NFT_CONTRACT_ADDRESS = '0x05394C3AF50365183Acd6CEc9807EdFD66179e7C';
   // const MARKET_CONTRACT_ADDRESS = '0xCc0c005B2eB5F59A9a8323E00847413ff1895Ef1';
 
-  const [nFTContract, setNFTContract] = useState();
-  const [marketContract, setMarketContract] = useState();
+  // const [nFTContract, setNFTContract] = useState();
+  // const [marketContract, setMarketContract] = useState();
+  const marketContract = useRef('');
+  const nFTContract = useRef('');
   // const [tokenInfo, setTokenInfo] = useState([]);
 
   const [nfts, setNfts] = useState([]);
 
   const getNFTs = () => {
-    console.log("Inside get NFTs", acc);
-    
-    marketContract.getNFTsOfArtist(acc).then(res => {
-      console.log("Inside then", res);
+    console.log('Inside get NFTs', acc);
+
+    marketContract.current.getNFTsOfArtist(acc).then((res) => {
+      console.log('Inside then', res);
       setNfts(res);
-    })
+    });
 
     // console.log('Artist NFTs', artistNfts);
     // setNfts(artistNfts);
@@ -59,8 +61,8 @@ export default function Cards({ acc }) {
           signer
         );
 
-        setNFTContract(nftContract);
-        setMarketContract(marketPlaceContract);
+        nFTContract.current = nftContract;
+        marketContract.current = marketPlaceContract;
       }
     } catch (err) {
       console.log('In error: ' + err);
@@ -73,7 +75,7 @@ export default function Cards({ acc }) {
 
   return (
     <>
-      {(nfts?.length > 0) ? (
+      {nfts?.length > 0 ? (
         <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 z-0 text-fuchsia-400'>
           <div className='mt-6 grid grid-cols-1 gap-y-28 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-32'>
             {nfts.map((nft, index) => {
@@ -92,9 +94,7 @@ export default function Cards({ acc }) {
                         <span aria-hidden='true' className='absolute inset-0' />
                         {nft.tokenName}
                       </h3>
-                      <p className='mt-1 text-sm text-gray-500 ml-4'>
-                         name
-                      </p>
+                      <p className='mt-1 text-sm text-gray-500 ml-4'>name</p>
                       <p className='mt-1 text-sm text-gray-500 ml-4'>
                         Token Id: {nft.tokenId.toNumber()}
                       </p>

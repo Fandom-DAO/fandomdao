@@ -3,11 +3,11 @@ import React from "react";
 function NFTCard({tokenId, price, soldCount, totalCount, nftName, description, imageURI, nftType, artist, buyNFT}){
     return (
         <div className='flex flex-col rounded my-8 hover:grid-cols-3 bg-[#1E2342]'>
-            {/* <div style={{backgroundImage: imageURI}}
+            {/* <div style={{backgroundImage: {imageURI}}}
                 className="w-100 rounded-t min-h-max h-96 bg-cover" 
             /> */}
             <div>
-                <img src={imageURI}/>
+                <img src={imageURI} alt='nftImage'/>
             </div>
             <div className="p-5">
             <div className="text-xl font-semibold flex justify-between">
