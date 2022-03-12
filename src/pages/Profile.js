@@ -8,9 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 import MarketABI from '../utils/Marketabi.json';
 
-import { create, urlSource } from 'ipfs-http-client';
-
 import CreateNFT from '../components/CreateNFT';
+import Editprofile from '../components/Editprofile';
+
+
 
 import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
 
@@ -25,7 +26,9 @@ const Profile = ({ acc }) => {
 
   const [artistInfo, setArtistInfo] = useState([]);
 
+  const [openCreateNFT, setOpenCreateNFT] = useState(false);
   const [open, setOpen] = useState(false);
+
   const [marketContract, setMarketContract] = useState();
 
   var account = acc.slice(0,6)+'. . . . . .'+acc.slice(-5);
@@ -77,6 +80,9 @@ const Profile = ({ acc }) => {
     }
   }, [acc, marketContract]);
 
+  const defaultImage =
+  'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640';
+
   return (
     <div className='grid bg-[#0a111a] pt-2'>
       <div className='grid mx-12 h-80'>
@@ -85,11 +91,15 @@ const Profile = ({ acc }) => {
           src={require('../assets/fallbackBanner.jpg')}
           alt='profileBanner'
         />
+
+        
+
         <img
           className='rounded-[50%] bg-white w-32 h-32 object-cover place-self-center -mt-16'
-          src={artistInfo.artistImageURI?artistInfo.artistImageURI.replace(".infura", ""):''}
+          src={artistInfo.artistImageURI?artistInfo.artistImageURI.replace(".infura", ""):defaultImage}
           alt='profilePic'
         />
+
         <button
           onClick={() => setIsShown(true)}
           className='hidden justify-self-end w-28 -mt-28 mr-2 bg-[#3f313110] text-black text-xs h-10 rounded-lg border-2 border-black'
@@ -135,11 +145,13 @@ const Profile = ({ acc }) => {
       </div>
       <div className='flex gap-4 place-self-center mt-6'>
         <button
-          onClick={() => navigate('/editprofile')}
+          onClick={() => setOpen(true)}
           className='w-32 h-10 border-solid border-2 border-otherGray text-xs text-white rounded-lg'
         >
           Edit Profile
         </button>
+        
+      <Editprofile open={open} setOpen={setOpen} acc={acc} />
         <button className='w-11 h-10 border-solid border-2 text-otherGray rounded-lg'>
           <img className='ml-2.5' src={shareIcon} />
         </button>
@@ -148,13 +160,13 @@ const Profile = ({ acc }) => {
       <div>
         <button
           className='w-32 h-10 border-solid border-2 bg-black border-black bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext text-xs text-white float-right rounded-lg mr-28 mt-8'
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenCreateNFT(true)}
         >
           Create NFT
         </button>
       </div>
       <Cards acc={acc} />
-      <CreateNFT open={open} setOpen={setOpen} acc={acc} />
+      <CreateNFT openCreateNFT={openCreateNFT} setOpenCreateNFT={setOpenCreateNFT} acc={acc} />
     </div>
   );
 };

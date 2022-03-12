@@ -2,7 +2,7 @@ export const memberData = {
     members: [
       {
         "name": "Srijith Padmesh",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1O3_7EyOmNhFZiKxl4sFlFMva8GJ280FV",
+        "imageSrc": "https://ipfs.io/ipfs/QmdHMHRu7N1TQfJ1AZPLjLDeag5SgSFCHKimZguMWnf6Qb",
         "contribution": "Product Manager / Ideator",
         "portfolio": "https://srijith.simple.ink/",
         "github": "",
@@ -12,7 +12,7 @@ export const memberData = {
       },
       {
         "name": "Sweta Shaw",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1aYxat7tFgr4EiAMCGeaCAK9MC13wxnUn",
+        "imageSrc": "https://ipfs.io/ipfs/QmNnjKwLPL6GRUjeKJodbHhBusc29jRLjxCwbMVtctC2LQ",
         "contribution": "Blockchain developer",
         "portfolio": "",
         "github": "https://github.com/swetshaw",
@@ -22,7 +22,7 @@ export const memberData = {
       },
       {
         "name": "Gaurang Gupta",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1x4H72EwVMhJRc516eqIDtC9kJkSnowdy",
+        "imageSrc": "https://ipfs.io/ipfs/QmShsXH2YBYygw1J6gDDTre75G5StRsNfPzpTjNLbbTkXW",
         "contribution": "Blockchain Developer",
         "portfolio": "",
         "github": "https://github.com/gaurang2200",
@@ -32,7 +32,7 @@ export const memberData = {
       },
       {
         "name": "Anupam Baranwal",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=117nlaHmyDo1-qNPfh1qUhhRYjMrxylGN",
+        "imageSrc": "https://ipfs.io/ipfs/QmP9GRUxT4HheiqVVujQqQprDmBHFTBuRPv5gXxQJTJ1zh",
         "contribution": "Front-end Developer",
         "portfolio": "",
         "github": "https://github.com/anupam-b",
@@ -42,7 +42,7 @@ export const memberData = {
       },
       {
         "name": "Katti",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1R0V-5DkVJGM7RRn72VYvcddCxreEhxbA",
+        "imageSrc": "https://ipfs.io/ipfs/QmXoJTSKpEohMcuah8e8tSFfAdc2f9rq9WmfTBRMNhNf5t",
         "contribution": "Front-end Developer",
         "portfolio": "https://skatti.netlify.app",
         "github": "https://github.com/kattisrik/",
@@ -52,7 +52,7 @@ export const memberData = {
       },
       {
         "name": "Avinash Kauran",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1TBLDJ1QCKMauWgN7ucYMA_qXrTIDcRQ1",
+        "imageSrc": "https://ipfs.io/ipfs/QmZFJnSNmhdCzYP1vZLCWLvvowzEWQegDVC6R7PdZhAEcY",
         "contribution": "Front-end Developer",
         "portfolio": "",
         "github": "https://github.com/avinash7375/",
@@ -62,7 +62,7 @@ export const memberData = {
       },
       {
         "name": "Rohan K.",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1HKoAamybjaBCFtijgGFv3izoENDHs51g",
+        "imageSrc": "https://ipfs.io/ipfs/QmS9qmYChgZ6tGXzw4i19WmzuLQKbdUCDA49RVCGb8rRu7",
         "contribution": "UI Designer",
         "portfolio": "",
         "github": "https://github.com/rohannrk",
@@ -72,7 +72,7 @@ export const memberData = {
       },
       {
         "name": "Rochak Saini",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1-M_FAE2s_h-g39pudeSgbturp7mfefal",
+        "imageSrc": "https://ipfs.io/ipfs/QmWm6FYMK9fYK8wmAg2syoTUYBe5izfeQ6SCPhrjHxvH6G",
         "contribution": "Community Manager",
         "portfolio": "",
         "github": "",
@@ -82,7 +82,7 @@ export const memberData = {
       },
       {
         "name": "Ishan",
-        "imageSrc": "https://drive.google.com/uc?export=view&id=1-M_FAE2s_h-g39pudeSgbturp7mfefal",
+        "imageSrc": "https://ipfs.io/ipfs/Qme1Yj48SYtRwij7BfeGkKtgesHeosYxRgeBEoKjj4jzCf",
         "contribution": "Community Manager",
         "portfolio": "",
         "github": "",

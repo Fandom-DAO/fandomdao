@@ -5,7 +5,10 @@ import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
-const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
+
+function Editprofile({open, setOpen, acc}) {
+    console.log(open)
+
   // const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
   // const MARKET_CONTRACT_ADDRESS = '0xF03614BF7FeC9f77aa0CF4F85D344Ce8A80524cD';
 
@@ -13,126 +16,67 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
   const [marketContract, setMarketContract] = useState();
 
   // This is the tokenURI
-  const [tokenURI, setTokenURI] = useState();
   const provider = useRef();
 
   const client = create('https://ipfs.infura.io:5001/api/v0');
 
   const defaultImage =
     'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640';
-  const [nftName, setNftName] = useState();
-  const [description, setDescription] = useState();
-  const [amount, setAmount] = useState();
-  const [price, setPrice] = useState();
-  const [imageURL, setImageURL] = useState();
-  const [type, setType] = useState('Premium');
-  const [artistAddress, setArtistAddress] = useState(acc);
+
+
+  const [profilePic, setProfilePic] = useState(null);
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [category, setCategory] = useState();
   const cancelButtonRef = useRef(null);
   const setValuesToDefault = () => {
-    setNftName('');
-    setDescription('');
-    setAmount(0);
-    setImageURL('');
-    setType('Premium');
-    setPrice(0);
+    setUsername('');
+    setProfilePic('');
+    setCategory('');
+    setEmail('');
   };
-  const handleimageUpload = async (event) => {
-    event.preventDefault();
-    const reader = new FileReader();
-    const file = event.target.files[0];
-    // reader.readAsDataURL(file);
-    // reader.onloadend = () => {
-    //   const base64data = reader.result;
-    //   setImageURL(base64data);
-    // };
-
-    const addFile = await client.add(file, {
-      progress: (prog) => console.log(`received: ${prog}`),
-    });
-    const url = `https://ipfs.infura.io/ipfs/${addFile.path}`;
-    setImageURL(url);
-  };
-  const handleCancel = () => {
-    setOpenCreateNFT(false);
-    setValuesToDefault();
-  };
-
-  async function publishNFT() {
-    // e.preventDefault();
-    if (nftName && description && amount && price && imageURL && type) {
-      // Sending the meta-data to IPFS
-      const nftObj = JSON.stringify({
-        name: nftName,
-        desription: description,
-        image: imageURL,
-        attributes: [
-          {
-            trait_type: 'level',
-            value: type,
-          },
-        ],
+  
+  async function onChangePhoto(e) {
+    const file = e.target.files[0];
+    try {
+      const added = await client.add(file, {
+        progress: (prog) => console.log(`received: ${prog}`),
       });
-      try {
-        const added = await client.add(nftObj);
-
-        let tempURI = `https://ipfs.infura.io/ipfs/${added.path}`;
-        console.log(' tempURI: ', tempURI);
-
-        setTokenURI(tempURI);
-        console.log(' TokenURI: ', tokenURI);
-
-        await launchNFTHandler(tempURI);
-
-        alert('NFTs Published Successfully !!!');
-      } catch (err) {
-        console.log('Error In: ', err);
-      }
-      setValuesToDefault();
-      setOpenCreateNFT(false);
-    } else {
-      alert('Fill all the values in the form !!!');
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setProfilePic(url.replace(".infura", ""));
+    } catch (err) {
+      console.log(err);
     }
   }
 
-  const launchNFTHandler = async (tokenURI) => {
-    // Launch NFT Returns TokenInfo => tokenId, Price, Amount
-    let transaction = await nFTContract.launchNFT(amount, tokenURI);
-    let tx = await transaction.wait();
-    console.log('tx', tx);
-    let event = tx.events[0];
-    // let value = event.args[2];
-    // let tokenId = value.toNumber();
-    let tokenId = event.args.id.toNumber();
-    console.log('id', event.args.id.toNumber());
-    // console.log('Value id', tokenId);
-
-    console.log(
-      acc,
-      tokenId,
-      amount,
-      price,
-      nftName,
-      description,
-      imageURL,
-      type
-    );
-
-    //NFT is minted, now listing of NFT
-    transaction = await marketContract.listNFT(
-      NFT_CONTRACT_ADDRESS,
-      acc,
-      tokenId,
-      amount,
-      price,
-      nftName,
-      description,
-      imageURL,
-      type
-    );
-    transaction.gasLimit = 3000000;
-    tx = await transaction.wait();
-    console.log('Item listed');
+  const handleCancel = () => {
+    setOpen(false);
+    setValuesToDefault();
   };
+
+  async function createUser() {
+    // e.preventDefault();
+    if (profilePic && category && username) {
+        console.log('adding artist');
+        let transaction = await marketContract.addArtist(
+            acc,
+            username,
+            profilePic,
+            category
+        );
+        
+        let tx = await transaction.wait();
+        // tx = await transaction.wait();
+        transaction = await marketContract.getArtistInfo(acc);
+
+        console.log('Artist', transaction);
+        setValuesToDefault();
+        setOpen(false);
+    }
+    else {
+      alert('Fill all the values in the form !!!');
+    }
+  }
 
   useEffect(() => {
     try {
@@ -162,12 +106,13 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
   }, []);
 
   return (
-    <Transition.Root show={openCreateNFT} as={Fragment}>
+    
+    <Transition.Root show={open} as={Fragment}>
       <Dialog
         as='div'
         className='fixed z-10 inset-0 overflow-y-auto'
         initialFocus={cancelButtonRef}
-        onClose={setOpenCreateNFT}
+        onClose={setOpen}
       >
         <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
           <Transition.Child
@@ -196,7 +141,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
             leaveFrom='opacity-100 translate-y-0 sm:scale-100'
             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
           >
-            <div className='inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
+            <div className='inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full'>
               <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
                 <div className='sm:flex sm:items-start'>
                   <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
@@ -204,7 +149,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
                       as='h3'
                       className='text-lg leading-6 font-medium text-gray-900'
                     >
-                      Create NFT
+                      Edit Profile
                     </Dialog.Title>
                     <div className='mt-2'>
                       <div className='flex flex-wrap -mx-3 mb-6'>
@@ -213,15 +158,15 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
                             className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
                             for='grid-first-name'
                           >
-                            Artist Name
+                            User Name
                           </label>
                           <input
-                            value={nftName}
-                            onChange={(e) => setNftName(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
                             id='grid-name'
                             type='text'
-                            placeholder='Artist Name'
+                            placeholder='User Name'
                             required
                           />
                         </div>
@@ -232,51 +177,38 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
                             className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
                             for='grid-password'
                           >
-                            Description
+                            Email
                           </label>
                           <input
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                             id='grid-description'
                             type='text'
-                            placeholder='Description'
+                            placeholder='Email'
                           />
                         </div>
                       </div>
                       <div className='flex flex-wrap -mx-3 mb-6'>
-                        <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
-                          <label
-                            className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                            for='grid-city'
-                          >
-                            Price
-                          </label>
-                          <input
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                            id='grid-city'
-                            type='number'
-                            placeholder='Price in Matic'
-                          />
-                        </div>
-                        <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+
+                        <div className='w-full px-3 mb-6 md:mb-0'>
                           <label
                             className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
                             for='grid-state'
                           >
-                            Type
+                            Category
                           </label>
                           <div className='relative'>
                             <select
-                              value={type}
-                              onChange={(e) => setType(e.target.value)}
+                              value={category}
+                              onChange={(e) => setCategory(e.target.value)}
                               className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                               id='grid-state'
                             >
-                              <option value={'Premium'}>Premium</option>
-                              <option value={'General'}>General</option>
+                              <option value='' selected>Category</option>
+                              <option value={'Music'}>Music</option>
+                              <option value={'Comic'}>Comic</option>
+                              <option value={'Youtuber'}>Youtuber</option>
                             </select>
                             <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                               <svg
@@ -289,51 +221,37 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
                             </div>
                           </div>
                         </div>
-                        <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
-                          <label
-                            className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                            for='grid-last-name'
-                          >
-                            Amount
-                          </label>
-                          <input
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                            id='grid-last-name'
-                            type='number'
-                            placeholder='Total Amount'
-                            required
-                          />
-                        </div>
                       </div>
                       <div className='flex flex-wrap -mx-3 mb-2'>
                         <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                           <input
-                            onChange={handleimageUpload}
+                            onChange={onChangePhoto}
                             className='form-control
-                                                            mt-16
-                                                            block
-                                                            w-full
-                                                            px-3
-                                                            py-1.5
-                                                            text-base
-                                                            font-normal
-                                                            text-gray-700
-                                                            bg-white bg-clip-padding
-                                                            border border-solid border-gray-300
-                                                            rounded
-                                                            transition
-                                                            ease-in-out
-                                                            m-0
-                                                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                                    mt-16
+                                    block
+                                    w-full
+                                    sm:w-[108px]
+                                    px-1.5
+                                    py-1.5
+                                    text-base
+                                    font-normal
+                                    text-gray-700
+                                    bg-white bg-clip-padding
+                                    border border-solid border-gray
+                                    rounded
+                                    transition
+                                    ease-in-out
+                                    m-0
+                                    focus:text-gray-700 focus:bg-white focus:outline-none'
                             type='file'
+                            accept='image/*'
+                            multiple={false}
                             id='formFile'
                           />
                         </div>
                         <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                           <img
-                            src={imageURL || defaultImage} alt="uploadedImage"
+                            src={profilePic} alt="uploadedImage"
                             onError={(e) => e.target.src = defaultImage}
                             className='w-full h-full object-center object-cover lg:w-full lg:h-full'
                           />
@@ -347,9 +265,9 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
                 <button
                   type='button'
                   className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-blue focus:outline-none bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext sm:ml-3 sm:w-auto sm:text-sm'
-                  onClick={publishNFT}
+                  onClick={createUser}
                 >
-                  Publish NFTs
+                  Update Profile
                 </button>
                 <button
                   type='button'
@@ -365,6 +283,8 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
         </div>
       </Dialog>
     </Transition.Root>
-  );
-};
-export default CreateNFT;
+
+  )
+}
+
+export default Editprofile

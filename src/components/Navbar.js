@@ -5,6 +5,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
 
+import MarketABI from '../utils/Marketabi.json';
+import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
+
 const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const navigate = useNavigate();
 
@@ -12,8 +15,18 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const [artistInfo, setArtistInfo] = useState([]);
+  const [marketContract, setMarketContract] = useState();
   
   var account = acc.slice(0,6)+'....'+acc.slice(-5);
+
+  const getArtist = async () => {
+    let _artistInfo = await marketContract.getArtistInfo(acc);
+    // tx = await transaction.wait();
+    setArtistInfo(_artistInfo);
+    console.log('Artist', _artistInfo);
+  };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -24,9 +37,38 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   };
 
   useEffect(() => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const marketPlaceContract = new ethers.Contract(
+          MARKET_CONTRACT_ADDRESS,
+          MarketABI.abi,
+          signer
+        );
+        setMarketContract(marketPlaceContract);
+      }
+    } catch (err) {
+      console.log('In error: ' + err);
+    }
+  }, []);
+
+  useEffect(() => {
     showButton();
     window.addEventListener('resize', showButton);
   }, []);
+
+  useEffect(() => {
+    if (acc && marketContract) {
+      getArtist();
+    }
+  }, [acc, marketContract]);
+
+  const defaultImage =
+    'https://ipfs.io/ipfs/QmVq1icnu8o5gRkwpTW284AXfo3p2inQWw2Jgbxfui3t4j';
 
   return (
     <div>
@@ -44,7 +86,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
         </Link>
       </div>
 
-      <div className='flex items-center h-16'>
+      <div className='flex items-center h-16 text-lg font-semibold'>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='flex rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
             <Link to='/' onClick={closeMobileMenu}>
@@ -69,18 +111,32 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               <p>Contact Us</p>
             </Link>
           </li>
+          <div className='flex flex-row gap-2 text-2xl'>
           <li className='flex sm:hidden rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
             <Link to='/contactus' onClick={closeMobileMenu}>
               <FaDiscord />
             </Link>
           </li>
+          <li className='flex sm:hidden rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
+            <Link to='/contactus' onClick={closeMobileMenu}>
+              <FaTwitter />
+            </Link>
+          </li>
+          <li className='flex sm:hidden rounded-md text-[#d53f86] md:px-8 md:py-2 text-center md:no-underline md:items-center'>
+            <Link to='/contactus' onClick={closeMobileMenu}>
+              <FaGithub />
+            </Link>
+          </li>
+          </div>
+          
         </ul>
       </div>
 
       {isAuthenticated ? (
         <div className='flex'>
           <img
-            src={require('../assets/fandomDAO.png')}
+            src={artistInfo.artistImageURI?artistInfo.artistImageURI.replace(".infura", ""):defaultImage}
+            onError={(e) => e.target.src = defaultImage}
             className='w-12 h-12 mr-2 rounded-full hidden md:flex cursor-pointer'
             alt='profilepic'
             onClick={() => {
@@ -92,7 +148,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
               onClick={() => {
                 navigate('/profile');
               }}
-              className='table text-white p-2 md:px-2 md:py-2 text-center'
+              className='table text-white text-lg font-semibold p-2 md:px-2 md:py-2 text-center'
             >
               {account}
             </button>

@@ -133,11 +133,11 @@ export default function App() {
               <Route path='/marketplace' exact element={<Marketplace acc={acc} marketContract={marketcontract} />} />
               <Route path='/contactus' exact element={<ContactUs />} />
               <Route path='/profile' exact element={<Profile acc={acc} />} />
-              <Route
+              {/* <Route
                 path='/editprofile'
                 exact
                 element={<EditProfile acc={acc} />}
-              />
+              /> */}
             </Routes>
           </>
           <Footer />
