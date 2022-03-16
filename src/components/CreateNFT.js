@@ -4,6 +4,7 @@ import { create } from 'ipfs-http-client';
 import { ethers } from 'ethers';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
+import Loader from './Loader';
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
 const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
   // const NFT_CONTRACT_ADDRESS = '0x9F4F42725dD6a2B4f554A2555Ec032AB6De0e9D9';
@@ -15,7 +16,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
   // This is the tokenURI
   const [tokenURI, setTokenURI] = useState();
   const provider = useRef();
-
+  const [isLoading, setIsLoading] = useState(false)
   const client = create('https://ipfs.infura.io:5001/api/v0');
 
   const defaultImage =
@@ -73,6 +74,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
         ],
       });
       try {
+        setIsLoading(true)
         const added = await client.add(nftObj);
 
         let tempURI = `https://ipfs.infura.io/ipfs/${added.path}`;
@@ -86,6 +88,8 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
         alert('NFTs Published Successfully !!!');
       } catch (err) {
         console.log('Error In: ', err);
+      } finally {
+        setIsLoading(false)
       }
       setValuesToDefault();
       setOpenCreateNFT(false);
@@ -162,6 +166,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
   }, []);
 
   return (
+    <>
     <Transition.Root show={openCreateNFT} as={Fragment}>
       <Dialog
         as='div'
@@ -170,6 +175,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
         onClose={setOpenCreateNFT}
       >
         <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+        {isLoading && <Loader />}
           <Transition.Child
             as={Fragment}
             enter='ease-out duration-300'
@@ -365,6 +371,7 @@ const CreateNFT = ({ openCreateNFT, setOpenCreateNFT, acc }) => {
         </div>
       </Dialog>
     </Transition.Root>
+    </>
   );
 };
 export default CreateNFT;

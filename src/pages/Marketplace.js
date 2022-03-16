@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useRef } from "react";
 import { ethers } from "ethers";
-
+import Loader from "../components/Loader";
 import MarketABI from "../utils/Marketabi.json";
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from "../config.js";
 import NFTCard from "../components/NFTCard";
@@ -18,7 +18,7 @@ const Marketplace = ({acc}) => {
   const [showNFT, setShowNFT] = useState(true);
 
   let artists;
-
+  const [isLoading, setIsLoading] = useState(false) 
   const [currentAddress, setCurrentAddress] = useState("");
   const [allNFTs, setAllNFTs] = useState([]);
   const [allArtists, setAllArtists] = useState([]);
@@ -41,7 +41,9 @@ const Marketplace = ({acc}) => {
   };
 
   const getAllArtists = async () => {
+    setIsLoading(true)
     const res = await marketContract.current.getAllArtists();
+    setIsLoading(false)
     artists = res;
     // console.log(res[0]);
 
@@ -121,6 +123,8 @@ const Marketplace = ({acc}) => {
             3: Category of the Artist - String
         
         */
+       <>
+       {isLoading && <Loader />}
     <div className="mx-28 mt-14">
       <div className="text-[#ffffff] text-5xl font-bold mb-8">
         <div>
@@ -183,6 +187,7 @@ const Marketplace = ({acc}) => {
             })}
       </div>
     </div>
+    </>
   );
 };
 

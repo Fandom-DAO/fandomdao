@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { create } from 'ipfs-http-client';
 import { ethers } from 'ethers';
+import Loader from './Loader';
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
@@ -29,6 +30,7 @@ function Editprofile({open, setOpen, acc}) {
   const [email, setEmail] = useState();
   const [category, setCategory] = useState();
   const cancelButtonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false)
   const setValuesToDefault = () => {
     setUsername('');
     setProfilePic('');
@@ -58,6 +60,7 @@ function Editprofile({open, setOpen, acc}) {
     // e.preventDefault();
     if (profilePic && category && username) {
         console.log('adding artist');
+        setIsLoading(true)
         let transaction = await marketContract.addArtist(
             acc,
             username,
@@ -68,7 +71,7 @@ function Editprofile({open, setOpen, acc}) {
         let tx = await transaction.wait();
         // tx = await transaction.wait();
         transaction = await marketContract.getArtistInfo(acc);
-
+        setIsLoading(false)
         console.log('Artist', transaction);
         setValuesToDefault();
         setOpen(false);
@@ -115,6 +118,7 @@ function Editprofile({open, setOpen, acc}) {
         onClose={setOpen}
       >
         <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+        {isLoading && <Loader />}
           <Transition.Child
             as={Fragment}
             enter='ease-out duration-300'
