@@ -118,7 +118,7 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className='h-screen bg-[#0a111a]'>
       {width ? (
         <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
           <Navbar
