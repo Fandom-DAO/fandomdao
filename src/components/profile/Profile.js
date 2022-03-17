@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import fallbackAvatar from '../../assets/fallbackAvatar.svg'
 import etheriumLogo from '../../assets/etheriumLogo.svg'
 import shareIcon from '../../assets/shareIcon.svg'
 import Cards from './Cards'
 import { artistData } from '../../assets/data'
+import CreateNFT from './CreateNFT'
 const Profile = () => {
+  const [open, setOpen] = useState(false)
   return (
     <div className="grid">
       <div className="bg-gray grid rounded-lg mx-12 h-80">
@@ -35,7 +38,13 @@ const Profile = () => {
         </button>
       </div>
       <div className="border-solid border mt-8 mx-12 border-otherGray"></div>
+      <div>
+      <button className="w-32 h-10 border-solid border-2 bg-black border-black bg-gradient-to-r from-bluecolor via-purple-500 to-pinktext text-xs text-white float-right rounded-lg mr-28 mt-8" onClick={() => setOpen(true)}>
+          Create NFT
+      </button>
+      </div>
       <Cards />
+      <CreateNFT open={open} setOpen={setOpen}/>
     </div>
   )
 }
