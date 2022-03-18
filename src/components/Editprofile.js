@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { create } from 'ipfs-http-client';
 import { ethers } from 'ethers';
 import Loader from './Loader';
+import imageCompression from "browser-image-compression";
 import MarketABI from '../utils/Marketabi.json';
 import NFTABI from '../utils/NFTabi.json';
 import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from '../config.js';
