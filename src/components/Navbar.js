@@ -4,6 +4,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { FaDiscord, FaTwitter, FaGithub } from 'react-icons/fa';
+import SimpleCrypto from "simple-crypto-js"
 
 import MarketABI from '../utils/Marketabi.json';
 import {NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS} from '../config.js'
@@ -15,17 +16,22 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const [username, setUsername] = useState()
 
   const [artistInfo, setArtistInfo] = useState([]);
   const [marketContract, setMarketContract] = useState();
   
   var account = acc.slice(0,6)+'....'+acc.slice(-5);
 
+  var id = SimpleCrypto.generateRandom(16)+SimpleCrypto.generateRandom(32)+SimpleCrypto.generateRandom(16)
+
   const getArtist = async () => {
     let _artistInfo = await marketContract.getArtistInfo(acc);
     // tx = await transaction.wait();
     setArtistInfo(_artistInfo);
     console.log('Artist', _artistInfo);
+    id = _artistInfo[1]
+    setUsername(id);
   };
 
   const showButton = () => {
@@ -58,6 +64,7 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
 
   useEffect(() => {
     showButton();
+    setUsername(id);
     window.addEventListener('resize', showButton);
   }, []);
 
@@ -140,13 +147,13 @@ const Navbar = ({ acc, isAuthenticated, connectWalletAction }) => {
             className='w-12 h-12 mr-2 rounded-full hidden md:flex cursor-pointer'
             alt='profilepic'
             onClick={() => {
-              navigate('/profile');
+              navigate(`/profile/${username}`);
             }}
           />
           <div className='rounded-md bg-gradient-to-r from-[#df3f86] to-[#6218a8]'>
             <button
               onClick={() => {
-                navigate('/profile');
+                navigate(`/profile/${username}`);
               }}
               className='table text-white text-lg font-semibold p-2 md:px-2 md:py-2 text-center'
             >

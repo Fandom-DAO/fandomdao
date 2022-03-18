@@ -132,7 +132,7 @@ export default function App() {
               <Route path='/about' exact element={<About />} />
               <Route path='/marketplace' exact element={<Marketplace acc={acc} marketContract={marketcontract} />} />
               <Route path='/contactus' exact element={<ContactUs />} />
-              <Route path='/profile' exact element={<Profile acc={acc} />} />
+              <Route path="/profile/:username" exact element={<Profile acc={acc}/>}/>
               {/* <Route
                 path='/editprofile'
                 exact

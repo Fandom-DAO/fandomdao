@@ -27,6 +27,8 @@ const Marketplace = ({acc}) => {
   let artistMap = new Map();
   const [nftToArtist, setNftToArtist] = useState(new Map());
 
+  
+
   const getAllNFTs = async () => {
     const res = await marketContract.current.getAllNFTs();
     console.log("res", res)
@@ -51,6 +53,7 @@ const Marketplace = ({acc}) => {
       artistMap.set(artist[0], idx);
     });
     setAllArtists(res);
+    // console.log("art",res)
   };
 
   const buyNFT = async (tokenId, price) => {
@@ -184,7 +187,10 @@ const Marketplace = ({acc}) => {
                   artistCategory={artist[3]}
                 />
               );
-            })}
+              
+            })
+            }
+            
       </div>
     </div>
     </>
