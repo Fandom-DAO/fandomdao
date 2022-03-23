@@ -102,6 +102,9 @@ export default function Cards({ acc }) {
                     <p className='text-sm font-medium text-gray-900 mr-4 mt-2'>
                       {nft.tokenPrice.toNumber()} Matic
                     </p>
+                    <p className='text-sm font-medium text-gray-900 mr-4 mt-2'>
+                      {nft.soldCount} / {nft.totalCount} sold
+                    </p>
                   </div>
 
                   <div className='border-solid border -mt-8 mx-12 border-white'></div>
