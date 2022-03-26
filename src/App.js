@@ -1,26 +1,27 @@
-import Home from './pages/Home';
-import About from './pages/About';
-import ContactUs from './pages/Contactus';
-import Profile from './pages/Profile';
-import EditProfile from './pages/Editprofile';
-import Marketplace from './pages/Marketplace';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import { ethers } from 'ethers';
-import NFTABI from './utils/NFTabi.json';
-import MarketABI from './utils/Marketabi.json';
+import Home from "./pages/Home";
+import About from "./pages/About";
+import ContactUs from "./pages/Contactus";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/Editprofile";
+import Marketplace from "./pages/Marketplace";
+import PageNotFound from "./pages/PageNotFound";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { ethers } from "ethers";
+import NFTABI from "./utils/NFTabi.json";
+import MarketABI from "./utils/Marketabi.json";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Routes, Route, useNavigate, Link } from 'react-router-dom';
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
-import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from './config';
+import { NFT_CONTRACT_ADDRESS, MARKET_CONTRACT_ADDRESS } from "./config";
 
 export default function App() {
-  const [acc, setAcc] = useState('');
+  const [acc, setAcc] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [nftcontract, setNftcontract] = useState('');
-  const [marketcontract, setMarketcontract] = useState('');
+  const [nftcontract, setNftcontract] = useState("");
+  const [marketcontract, setMarketcontract] = useState("");
   const [width, setWidth] = React.useState(window.innerWidth);
 
   const navigate = useNavigate();
@@ -28,13 +29,13 @@ export default function App() {
   const checkIfUserIsOnCorrectNetwork = async () => {
     try {
       const { ethereum } = window;
-      let chainId = await ethereum.request({ method: 'eth_chainId' });
-      console.log('Connected to chain ' + chainId);
+      let chainId = await ethereum.request({ method: "eth_chainId" });
+      console.log("Connected to chain " + chainId);
 
-      const rinkebyChainId = '0x4';
+      const rinkebyChainId = "0x4";
       if (chainId !== rinkebyChainId) {
         alert(
-          'You are not connected to the Rinkeby Test Network! Please connect to Rinkeby Network'
+          "You are not connected to the Rinkeby Test Network! Please connect to Rinkeby Network"
         );
       }
     } catch (err) {
@@ -47,18 +48,18 @@ export default function App() {
       const { ethereum } = window;
 
       if (!ethereum) {
-        alert('Get Metamask!');
+        alert("Get Metamask!");
         return;
       }
 
       const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
+        method: "eth_requestAccounts",
       });
 
-      console.log('Connected', accounts[0]);
+      console.log("Connected", accounts[0]);
       setAcc(accounts[0]);
       setIsAuthenticated(true);
-      navigate('/profile')
+      navigate("/profile");
     } catch (e) {
       console.log(e);
     }
@@ -69,14 +70,14 @@ export default function App() {
       const { ethereum } = window;
       if (!ethereum) {
         setIsAuthenticated(false);
-        console.log('Make sure you have metamask!');
+        console.log("Make sure you have metamask!");
       } else {
-        console.log('We have the ethereum object', ethereum);
-        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        console.log("We have the ethereum object", ethereum);
+        const accounts = await ethereum.request({ method: "eth_accounts" });
 
         if (accounts.length !== 0) {
           const account = accounts[0];
-          console.log('Found an authorized account', account);
+          console.log("Found an authorized account", account);
           setIsAuthenticated(true);
           setAcc(account);
         }
@@ -118,9 +119,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className='h-screen bg-[#0a111a]'>
+    <div className="h-screen bg-[#0a111a]">
       {width ? (
-        <div className='m-0 p-0 box-border bg-[#0a111a] overflow-hidden'>
+        <div className="m-0 p-0 box-border bg-[#0a111a] overflow-hidden">
           <Navbar
             acc={acc}
             isAuthenticated={isAuthenticated}
@@ -128,11 +129,22 @@ export default function App() {
           />
           <>
             <Routes>
-              <Route path='/' exact element={<Home />} />
-              <Route path='/about' exact element={<About />} />
-              <Route path='/marketplace' exact element={<Marketplace acc={acc} marketContract={marketcontract} />} />
-              <Route path='/contactus' exact element={<ContactUs />} />
-              <Route path="/profile/:username" exact element={<Profile acc={acc}/>}/>
+              <Route path="/" exact element={<Home />} />
+              <Route path="/about" exact element={<About />} />
+              <Route
+                path="/marketplace"
+                exact
+                element={
+                  <Marketplace acc={acc} marketContract={marketcontract} />
+                }
+              />
+              <Route path="/contactus" exact element={<ContactUs />} />
+              <Route
+                path="/profile/:username"
+                exact
+                element={<Profile acc={acc} />}
+              />
+              <Route path="*" element={<PageNotFound />} />
               {/* <Route
                 path='/editprofile'
                 exact
@@ -143,7 +155,7 @@ export default function App() {
           <Footer />
         </div>
       ) : (
-        <div className='flex bg-black text-white h-screen items-center p-4 text-xl font-semibold'>
+        <div className="flex bg-black text-white h-screen items-center p-4 text-xl font-semibold">
           Oops, looks like our devs are too caught up in building out an amazing
           product. Use your PC to unveil the experience.
         </div>
